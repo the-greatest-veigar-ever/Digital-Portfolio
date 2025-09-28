@@ -50,6 +50,78 @@ class ThemeManager {
 // Initialize theme manager
 const themeManager = new ThemeManager();
 
+// Mobile Navigation Management
+class MobileNav {
+    constructor() {
+        this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        this.navMenu = document.querySelector('.nav-menu');
+        this.overlay = document.getElementById('mobile-menu-overlay');
+        this.navLinks = document.querySelectorAll('.nav-link');
+        this.isOpen = false;
+        this.init();
+    }
+
+    init() {
+        if (this.mobileMenuToggle && this.navMenu && this.overlay) {
+            this.bindEvents();
+        }
+    }
+
+    bindEvents() {
+        // Toggle button click
+        this.mobileMenuToggle.addEventListener('click', () => this.toggleMenu());
+
+        // Overlay click to close
+        this.overlay.addEventListener('click', () => this.closeMenu());
+
+        // Close menu when nav link is clicked
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', () => this.closeMenu());
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.closeMenu();
+            }
+        });
+
+        // Close menu when window is resized to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 968 && this.isOpen) {
+                this.closeMenu();
+            }
+        });
+    }
+
+    toggleMenu() {
+        if (this.isOpen) {
+            this.closeMenu();
+        } else {
+            this.openMenu();
+        }
+    }
+
+    openMenu() {
+        this.isOpen = true;
+        this.mobileMenuToggle.classList.add('active');
+        this.navMenu.classList.add('active');
+        this.overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    closeMenu() {
+        this.isOpen = false;
+        this.mobileMenuToggle.classList.remove('active');
+        this.navMenu.classList.remove('active');
+        this.overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+// Initialize mobile navigation
+const mobileNav = new MobileNav();
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
