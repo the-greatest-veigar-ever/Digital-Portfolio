@@ -462,50 +462,11 @@ section {
     color: var(--accent-color);
 }
 
-/* Dropdown functionality for bullet points */
-.dropdown-item {
-    cursor: pointer;
-    position: relative;
-}
-
-.dropdown-item::after {
-    content: ' ▼';
-    color: var(--accent-color);
-    font-size: 0.8em;
-    margin-left: 5px;
-    transition: transform 0.3s ease;
-}
-
-.dropdown-item.expanded::after {
-    transform: rotate(180deg);
-}
-
-.dropdown-item:hover {
-    color: var(--accent-color);
-}
-
 /* Sub-list styling for nested bullet points */
 .sub-list {
     margin-top: 0.5rem;
     margin-left: 1rem;
     padding-left: 0;
-    display: none;
-}
-
-.sub-list.expanded {
-    display: block;
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .sub-list li {

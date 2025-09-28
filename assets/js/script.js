@@ -130,48 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(typeWriter, 500);
     }
 
-    // Initialize dropdown functionality
-    initializeDropdowns();
 });
-
-// Dropdown functionality
-function initializeDropdowns() {
-    // Find all list items that have sub-lists (more reliable method)
-    document.querySelectorAll('.timeline-content li, .cert-card li, .skill-category li').forEach(item => {
-        const subList = item.querySelector('.sub-list');
-        if (subList) {
-            // Add dropdown class to the main list item
-            item.classList.add('dropdown-item');
-
-            // Add click event listener
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Toggle expanded state
-                this.classList.toggle('expanded');
-                subList.classList.toggle('expanded');
-
-                // Debug logging
-                console.log('Dropdown clicked:', this.classList.contains('expanded'));
-                console.log('SubList classes:', subList.classList.toString());
-            });
-
-            // Add keyboard accessibility
-            item.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-
-            // Make it focusable
-            item.setAttribute('tabindex', '0');
-        }
-    });
-
-    console.log('Dropdown initialization complete. Found items:', document.querySelectorAll('.dropdown-item').length);
-}
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
