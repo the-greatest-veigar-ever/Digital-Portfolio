@@ -1,0 +1,39 @@
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python virtual environment (if present)
+bin/
+lib/
+pyvenv.cfg
+.Python
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Claude Code files
+.claude/
+
+# Node modules (if using any build tools in future)
+node_modules/
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
