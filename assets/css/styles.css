@@ -462,24 +462,73 @@ section {
     color: var(--accent-color);
 }
 
+/* Dropdown functionality for bullet points */
+.dropdown-item {
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown-item::after {
+    content: ' ▼';
+    color: var(--accent-color);
+    font-size: 0.8em;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-item.expanded::after {
+    transform: rotate(180deg);
+}
+
+.dropdown-item:hover {
+    color: var(--accent-color);
+}
+
 /* Sub-list styling for nested bullet points */
-.timeline-content .sub-list {
+.sub-list {
     margin-top: 0.5rem;
     margin-left: 1rem;
     padding-left: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
 }
 
-.timeline-content .sub-list li {
+.sub-list.expanded {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+.sub-list li {
     font-size: 0.8rem;
     margin-bottom: 0.3rem;
     color: var(--text-accent);
     font-weight: 400;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.timeline-content .sub-list li::marker {
+.sub-list.expanded li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sub-list li::before {
     content: '◦ ';
     color: var(--accent-color);
     font-size: 1.2em;
+    margin-right: 8px;
+}
+
+/* Timeline specific sub-list */
+.timeline-content .sub-list li::marker {
+    content: none;
+}
+
+/* Cert card specific sub-list */
+.cert-card .sub-list li::marker {
+    content: none;
 }
 
 /* Certifications Section */
@@ -539,43 +588,16 @@ section {
 }
 
 .cert-card h3 a {
-    color: var(--text-primary);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    animation: subtle-flicker 3s ease-in-out infinite;
+    color: #ffd700;
+    text-decoration: underline;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
     cursor: pointer;
 }
 
 .cert-card h3 a:hover {
-    color: var(--accent-color);
+    color: #ffed4e;
     text-decoration: underline;
-    animation: none;
-    text-shadow: 0 0 8px var(--glow-color);
-}
-
-/* Subtle flickering animation for clickable headlines */
-@keyframes subtle-flicker {
-    0%, 100% {
-        opacity: 1;
-        color: var(--text-primary);
-        text-decoration: none;
-    }
-    25% {
-        opacity: 0.8;
-        color: var(--text-primary);
-        text-decoration: none;
-    }
-    50% {
-        opacity: 1;
-        color: var(--accent-color);
-        text-decoration: underline;
-        text-shadow: 0 0 5px var(--glow-color);
-    }
-    75% {
-        opacity: 0.9;
-        color: var(--text-primary);
-        text-decoration: none;
-    }
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
 .cert-card p {

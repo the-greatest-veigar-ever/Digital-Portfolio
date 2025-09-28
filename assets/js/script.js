@@ -129,7 +129,49 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start typing effect after a short delay
         setTimeout(typeWriter, 500);
     }
+
+    // Initialize dropdown functionality
+    initializeDropdowns();
 });
+
+// Dropdown functionality
+function initializeDropdowns() {
+    // Find all list items that have sub-lists
+    const dropdownItems = document.querySelectorAll('li:has(.sub-list)');
+
+    dropdownItems.forEach(item => {
+        const mainText = item.childNodes[0]; // Get the text node
+        const subList = item.querySelector('.sub-list');
+
+        if (mainText && subList) {
+            // Add dropdown class to the main list item
+            item.classList.add('dropdown-item');
+
+            // Add click event listener
+            item.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+
+                // Toggle expanded state
+                this.classList.toggle('expanded');
+                subList.classList.toggle('expanded');
+            });
+        }
+    });
+
+    // Alternative method for older browsers
+    document.querySelectorAll('.timeline-content li, .cert-card li').forEach(item => {
+        const subList = item.querySelector('.sub-list');
+        if (subList) {
+            item.classList.add('dropdown-item');
+
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('expanded');
+                subList.classList.toggle('expanded');
+            });
+        }
+    });
+}
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
