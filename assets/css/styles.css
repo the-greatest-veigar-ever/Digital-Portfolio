@@ -489,14 +489,23 @@ section {
     margin-top: 0.5rem;
     margin-left: 1rem;
     padding-left: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    display: none;
 }
 
 .sub-list.expanded {
-    max-height: 500px;
-    transition: max-height 0.3s ease-in;
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .sub-list li {
@@ -504,14 +513,6 @@ section {
     margin-bottom: 0.3rem;
     color: var(--text-accent);
     font-weight: 400;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.sub-list.expanded li {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .sub-list li::before {

@@ -136,41 +136,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Dropdown functionality
 function initializeDropdowns() {
-    // Find all list items that have sub-lists
-    const dropdownItems = document.querySelectorAll('li:has(.sub-list)');
-
-    dropdownItems.forEach(item => {
-        const mainText = item.childNodes[0]; // Get the text node
+    // Find all list items that have sub-lists (more reliable method)
+    document.querySelectorAll('.timeline-content li, .cert-card li, .skill-category li').forEach(item => {
         const subList = item.querySelector('.sub-list');
-
-        if (mainText && subList) {
+        if (subList) {
             // Add dropdown class to the main list item
             item.classList.add('dropdown-item');
 
             // Add click event listener
             item.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent event bubbling
+                e.preventDefault();
+                e.stopPropagation();
 
                 // Toggle expanded state
                 this.classList.toggle('expanded');
                 subList.classList.toggle('expanded');
+
+                // Debug logging
+                console.log('Dropdown clicked:', this.classList.contains('expanded'));
+                console.log('SubList classes:', subList.classList.toString());
             });
+
+            // Add keyboard accessibility
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+
+            // Make it focusable
+            item.setAttribute('tabindex', '0');
         }
     });
 
-    // Alternative method for older browsers
-    document.querySelectorAll('.timeline-content li, .cert-card li').forEach(item => {
-        const subList = item.querySelector('.sub-list');
-        if (subList) {
-            item.classList.add('dropdown-item');
-
-            item.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('expanded');
-                subList.classList.toggle('expanded');
-            });
-        }
-    });
+    console.log('Dropdown initialization complete. Found items:', document.querySelectorAll('.dropdown-item').length);
 }
 
 // Add keyboard shortcuts
