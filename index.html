@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nguyen Minh Quan - Portfolio</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=2025092919">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +18,13 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>Nguyen Minh Quan</h2>
+                <h2>Home</h2>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Intro</a></li>
                 <li><a href="#about" class="nav-link">About Me</a></li>
                 <li><a href="#experience" class="nav-link">Work Experience</a></li>
+                <li><a href="#projects" class="nav-link">Personal Projects</a></li>
                 <li><a href="#certifications" class="nav-link">Certificates & Awards</a></li>
                 <li><a href="#skills" class="nav-link">Technical Skills</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -134,6 +135,136 @@
                             <li>Achieved performance metrics with > 90% SLA ticket completion rate for branch queues and maintain 5/5 ticket feedback rating from Vietnam Microsoft System Center team.</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Personal Projects</h2>
+            <div class="circular-carousel-container">
+                <!-- Center Display -->
+                <div class="carousel-center">
+                    <div class="center-content" id="centerContent">
+                        <div class="center-project-icon">
+                            <i class="fas fa-circle" id="centerIcon"></i>
+                        </div>
+                        <h3 class="center-project-title" id="centerTitle">Select a Project</h3>
+                        <p class="center-project-description" id="centerDescription">Click on any project bubble to view details</p>
+                        <div class="center-project-actions">
+                            <a href="#" class="center-btn primary" id="centerDemoBtn" style="display: none;">
+                                <i class="fas fa-play"></i>
+                                Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Circular Carousel -->
+                <div class="carousel-wheel" id="carouselWheel">
+                    <div class="project-orbit" data-project="0">
+                        <div class="project-bubble active"
+                             data-icon="fas fa-music"
+                             data-title="Note Detector"
+                             data-description="Advanced music analysis application that detects and identifies musical notes in real-time using digital signal processing and machine learning algorithms."
+                             data-demo="https://notedetector.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="bubble-title">Note Detector</div>
+                            <div class="bubble-category">Music</div>
+                        </div>
+                    </div>
+
+                    <div class="project-orbit" data-project="1">
+                        <div class="project-bubble"
+                             data-icon="fa-solid fa-laptop"
+                             data-title="Fokus"
+                             data-description="Productivity enhancement tool designed to improve focus and time management with advanced task tracking and distraction blocking capabilities."
+                             data-demo="https://fokus.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fa-solid fa-laptop"></i>
+                            </div>
+                            <div class="bubble-title">Fokus</div>
+                            <div class="bubble-category">Productivity</div>
+                        </div>
+                    </div>
+
+                    <div class="project-orbit" data-project="2">
+                        <div class="project-bubble"
+                             data-icon="fas fa-robot"
+                             data-title="AI Optimizer"
+                             data-description="Machine learning optimization platform that enhances AI model performance through automated hyperparameter tuning and neural architecture search."
+                             data-demo="https://aioptimizer.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bubble-title">AI Optimizer</div>
+                            <div class="bubble-category">Machine Learning</div>
+                        </div>
+                    </div>
+
+                    <div class="project-orbit" data-project="3">
+                        <div class="project-bubble"
+                             data-icon="fas fa-graduation-cap"
+                             data-title="Mentorship Platform"
+                             data-description="Educational mentorship platform connecting students with industry professionals for skill development and career guidance."
+                             data-demo="https://mentorship.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="bubble-title">Mentorship Platform</div>
+                            <div class="bubble-category">Education</div>
+                        </div>
+                    </div>
+
+                    <div class="project-orbit" data-project="4">
+                        <div class="project-bubble"
+                             data-icon="fas fa-search"
+                             data-title="Vulnerability Scanner"
+                             data-description="Comprehensive security scanning tool that identifies vulnerabilities in web applications and network infrastructure with automated reporting."
+                             data-demo="https://vulnscanner.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="bubble-title">Vulnerability Scanner</div>
+                            <div class="bubble-category">Security Tools</div>
+                        </div>
+                    </div>
+
+                    <div class="project-orbit" data-project="5">
+                        <div class="project-bubble"
+                             data-icon="fas fa-code-branch"
+                             data-title="CI/CD Pipeline"
+                             data-description="Automated continuous integration and deployment pipeline with integrated security scanning and quality assurance for streamlined software delivery."
+                             data-demo="https://cicd.demo.com">
+                            <div class="bubble-icon">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <div class="bubble-title">CI/CD Pipeline</div>
+                            <div class="bubble-category">DevSecOps</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" data-slide="0"></span>
+                        <span class="indicator" data-slide="1"></span>
+                        <span class="indicator" data-slide="2"></span>
+                        <span class="indicator" data-slide="3"></span>
+                        <span class="indicator" data-slide="4"></span>
+                        <span class="indicator" data-slide="5"></span>
+                    </div>
+                    <button class="carousel-btn next" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -336,6 +467,6 @@
         </div>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js?v=2025092920"></script>
 </body>
 </html>
