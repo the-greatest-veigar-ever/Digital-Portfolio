@@ -1668,8 +1668,8 @@ html {
 
 /* Navigation Controls */
 .carousel-controls {
-    position: fixed;
-    bottom: 80px;
+    position: absolute;
+    bottom: -100px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
