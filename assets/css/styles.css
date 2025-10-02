@@ -1668,13 +1668,14 @@ html {
 
 /* Navigation Controls */
 .carousel-controls {
-    position: absolute;
-    bottom: -80px;
+    position: fixed;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 20px;
+    z-index: 100;
 }
 
 .carousel-btn {
@@ -1694,11 +1695,17 @@ html {
     border: 2px solid var(--border-color);
 }
 
-.carousel-btn:hover {
+.carousel-btn:hover:not(:disabled) {
     background: var(--accent-color);
     color: white;
     transform: scale(1.1);
     box-shadow: 0 8px 25px var(--glow-color);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: var(--bg-accent);
 }
 
 .carousel-indicators {

@@ -687,7 +687,6 @@ const imageEffects = new ImageEffects();
 class CircularCarousel {
     constructor() {
         this.currentProject = 0;
-        this.totalProjects = 6; // Total number of projects
 
         this.wheel = document.getElementById('carouselWheel');
         this.centerContent = document.getElementById('centerContent');
@@ -695,6 +694,8 @@ class CircularCarousel {
         this.nextBtn = document.getElementById('nextBtn');
         this.indicators = document.querySelectorAll('.indicator');
         this.bubbles = document.querySelectorAll('.project-bubble');
+
+        this.totalProjects = this.bubbles.length; // Total number of projects
 
         this.init();
     }
@@ -805,12 +806,28 @@ class CircularCarousel {
             indicator.classList.toggle('active', index === this.currentProject);
         });
 
+        // Update arrow button states
+        this.updateArrowStates();
+
         // Add pulse animation to center
         this.animateCenter();
     }
 
+    updateArrowStates() {
+        // Disable prev button if at first project
+        if (this.prevBtn) {
+            this.prevBtn.disabled = (this.currentProject === 0);
+        }
+
+        // Disable next button if at last project
+        if (this.nextBtn) {
+            this.nextBtn.disabled = (this.currentProject === this.bubbles.length - 1);
+        }
+    }
+
     rotateWheel() {
-        const angle = -(this.currentProject * 60); // 60 degrees per project (360/6)
+        const anglePerProject = 360 / this.totalProjects;
+        const angle = -(this.currentProject * anglePerProject);
         if (this.wheel) {
             this.wheel.style.transform = `rotate(${angle}deg)`;
 
