@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc33;stop-opacity:1" />
+    </linearGradient>
+    <filter id="faviconGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark background circle -->
+  <circle cx="50" cy="50" r="48" fill="#0d1117"/>
+
+  <!-- Outer ring -->
+  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#faviconGradient)" stroke-width="2" opacity="0.4"/>
+
+  <!-- Terminal window shape -->
+  <rect x="20" y="25" width="60" height="45" rx="4" fill="none" stroke="url(#faviconGradient)" stroke-width="3" filter="url(#faviconGlow)"/>
+
+  <!-- Terminal dots -->
+  <circle cx="27" cy="32" r="2" fill="#00ff41" filter="url(#faviconGlow)"/>
+  <circle cx="35" cy="32" r="2" fill="#00ff41" filter="url(#faviconGlow)"/>
+  <circle cx="43" cy="32" r="2" fill="#00ff41" filter="url(#faviconGlow)"/>
+
+  <!-- Command prompt ">" symbol -->
+  <path d="M 30 45 L 40 50 L 30 55" fill="none" stroke="#00ff41" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#faviconGlow)"/>
+
+  <!-- "Q" letter integrated -->
+  <text x="52" y="58" font-family="monospace" font-size="24" font-weight="bold" fill="url(#faviconGradient)" filter="url(#faviconGlow)">Q</text>
+
+  <!-- Small accent line -->
+  <line x1="63" y1="60" x2="70" y2="60" stroke="#00ff41" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+</svg>

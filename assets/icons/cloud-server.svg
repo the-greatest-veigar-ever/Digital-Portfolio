@@ -1,0 +1,63 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc33;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Cloud shape -->
+  <path d="M 70 80 Q 60 70 60 60 Q 60 45 75 45 Q 80 35 95 35 Q 110 35 115 45 Q 130 45 130 60 Q 130 70 120 80 Z"
+        fill="none" stroke="url(#cloudGradient)" stroke-width="3" filter="url(#glow)"/>
+
+  <!-- Inner cloud detail -->
+  <path d="M 75 75 Q 70 68 70 62 Q 70 52 80 52 Q 85 47 95 47 Q 105 47 110 52 Q 120 52 120 62 Q 120 68 115 75"
+        fill="none" stroke="#00ff41" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Server rack 1 -->
+  <rect x="60" y="100" width="80" height="18" rx="3" fill="none" stroke="url(#cloudGradient)"
+        stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="70" cy="109" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <circle cx="80" cy="109" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <line x1="90" y1="106" x2="125" y2="106" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+  <line x1="90" y1="112" x2="120" y2="112" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Server rack 2 -->
+  <rect x="60" y="125" width="80" height="18" rx="3" fill="none" stroke="url(#cloudGradient)"
+        stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="70" cy="134" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <circle cx="80" cy="134" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <line x1="90" y1="131" x2="125" y2="131" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+  <line x1="90" y1="137" x2="120" y2="137" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Server rack 3 -->
+  <rect x="60" y="150" width="80" height="18" rx="3" fill="none" stroke="url(#cloudGradient)"
+        stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="70" cy="159" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <circle cx="80" cy="159" r="2.5" fill="#00ff41" filter="url(#glow)"/>
+  <line x1="90" y1="156" x2="125" y2="156" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+  <line x1="90" y1="162" x2="120" y2="162" stroke="#00ff41" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Connection lines from cloud to servers -->
+  <line x1="85" y1="80" x2="85" y2="100" stroke="#00ff41" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+  <line x1="100" y1="80" x2="100" y2="100" stroke="#00ff41" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+  <line x1="115" y1="80" x2="115" y2="100" stroke="#00ff41" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+
+  <!-- Data flow particles -->
+  <circle cx="85" cy="90" r="2" fill="#00ff41" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="100" cy="85" r="2" fill="#00ff41" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="115" cy="92" r="2" fill="#00ff41" opacity="0.6" filter="url(#glow)"/>
+
+  <!-- Corner brackets -->
+  <path d="M 40 40 L 40 35 L 45 35 M 155 35 L 160 35 L 160 40"
+        stroke="#00ff41" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+  <path d="M 40 160 L 40 165 L 45 165 M 155 165 L 160 165 L 160 160"
+        stroke="#00ff41" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom SVG Icons - Portfolio Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent-color: #00ff41;
+            --accent-hover: #00cc33;
+            --card-bg: #21262d;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --glow-color: rgba(0, 255, 65, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        h1::before {
+            content: '// ';
+            font-size: 0.8em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .icon-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-color);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .icon-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px var(--card-shadow), 0 0 30px var(--glow-color);
+        }
+
+        .icon-wrapper {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-card:hover .icon-wrapper {
+            background: var(--bg-primary);
+            box-shadow: inset 0 0 30px var(--glow-color);
+        }
+
+        .icon-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .icon-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .icon-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .theme-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 3rem;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 10px 30px var(--card-shadow);
+        }
+
+        .theme-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .theme-section h2::before {
+            content: '> ';
+        }
+
+        .usage-example {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .usage-example code {
+            color: var(--accent-color);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li::before {
+            content: '▸';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .icons-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .icon-wrapper {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Custom SVG Icon Collection</h1>
+        <p class="subtitle">Neon green theme with glowing effects - Perfect for your portfolio</p>
+
+        <div class="icons-grid">
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/terminal.svg" alt="Terminal Icon">
+                </div>
+                <h3 class="icon-name">terminal.svg</h3>
+                <p class="icon-description">Command-line interface with glowing prompt and cursor</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/code-brackets.svg" alt="Code Brackets Icon">
+                </div>
+                <h3 class="icon-name">code-brackets.svg</h3>
+                <p class="icon-description">Coding symbol with brackets and forward slash</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/cyber-shield.svg" alt="Cyber Shield Icon">
+                </div>
+                <h3 class="icon-name">cyber-shield.svg</h3>
+                <p class="icon-description">Security shield with lock - Perfect for cybersecurity</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/circuit-tech.svg" alt="Circuit Tech Icon">
+                </div>
+                <h3 class="icon-name">circuit-tech.svg</h3>
+                <p class="icon-description">Circuit board with processor and connections</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/data-analytics.svg" alt="Data Analytics Icon">
+                </div>
+                <h3 class="icon-name">data-analytics.svg</h3>
+                <p class="icon-description">Analytics chart with trend lines and data points</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/rocket-innovation.svg" alt="Rocket Innovation Icon">
+                </div>
+                <h3 class="icon-name">rocket-innovation.svg</h3>
+                <p class="icon-description">Launch rocket with flames - Innovation and growth</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/cloud-server.svg" alt="Cloud Server Icon">
+                </div>
+                <h3 class="icon-name">cloud-server.svg</h3>
+                <p class="icon-description">Cloud computing with server racks and connections</p>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-wrapper">
+                    <img src="assets/icons/ai-brain.svg" alt="AI Brain Icon">
+                </div>
+                <h3 class="icon-name">ai-brain.svg</h3>
+                <p class="icon-description">AI neural network brain with connections</p>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2>Icon Features</h2>
+            <ul class="features-list">
+                <li>Neon green color scheme (#00ff41) matching your portfolio</li>
+                <li>SVG glow filters for that cyberpunk aesthetic</li>
+                <li>Linear gradients for depth and dimension</li>
+                <li>Scalable vector graphics - no quality loss at any size</li>
+                <li>Optimized for both light and dark themes</li>
+                <li>Clean, modern developer-focused designs</li>
+                <li>Perfect for tech, security, and AI projects</li>
+            </ul>
+        </div>
+
+        <div class="theme-section">
+            <h2>Usage Example</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Add these icons to your portfolio using simple img tags or inline SVG:
+            </p>
+            <div class="usage-example">
+                <code>&lt;img src="assets/icons/terminal.svg" alt="Terminal" width="80" height="80"&gt;</code>
+            </div>
+            <div class="usage-example">
+                <code>&lt;img src="assets/icons/cyber-shield.svg" alt="Security" width="60"&gt;</code>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
