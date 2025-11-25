@@ -8,7 +8,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <!-- SEO & Open Graph -->
+    <meta name="description" content="Portfolio of Nguyen Minh Quan, a Security Architect and Software Engineer showcasing projects, skills, and experience.">
+    <meta property="og:title" content="Nguyen Minh Quan - Security Architect Portfolio">
+    <meta property="og:description" content="Portfolio of Nguyen Minh Quan, a Security Architect and Software Engineer showcasing projects, skills, and experience.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/images/profile-1.png">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
@@ -30,12 +39,12 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-controls">
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>
-                <button class="theme-toggle" id="theme-toggle">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
@@ -70,8 +79,8 @@
                 </div>
                 <div class="about-images">
                     <div class="image-container">
-                        <img src="assets/images/profile-1.png" alt="Quan Nguyen Profile" class="profile-image primary">
-                        <img src="assets/images/profile-2.png" alt="Quan Nguyen Profile Alt" class="profile-image secondary">
+                        <img src="assets/images/profile-1.png" alt="Quan Nguyen Profile" class="profile-image primary" loading="lazy">
+                        <img src="assets/images/profile-2.png" alt="Quan Nguyen Profile Alt" class="profile-image secondary" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -234,7 +243,7 @@
 
                 <!-- Navigation Controls -->
                 <div class="carousel-controls">
-                    <button class="carousel-btn prev" id="prevBtn">
+                    <button class="carousel-btn prev" id="prevBtn" aria-label="Previous project">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <div class="carousel-indicators">
@@ -244,7 +253,7 @@
                         <span class="indicator" data-slide="3"></span>
                         <span class="indicator" data-slide="4"></span>
                     </div>
-                    <button class="carousel-btn next" id="nextBtn">
+                    <button class="carousel-btn next" id="nextBtn" aria-label="Next project">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -435,8 +444,8 @@
                     </div>
                 </div>
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/quanng47/" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://www.facebook.com/koderqq/" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com/in/quanng47/" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.facebook.com/koderqq/" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
         </div>
@@ -448,6 +457,11 @@
             <p>&copy; 2025 Nguyen Minh Quan. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="assets/js/script.js?v=2025092920"></script>
 </body>

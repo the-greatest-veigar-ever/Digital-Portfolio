@@ -159,7 +159,28 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
+
+    // Back to Top Button Logic
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        if (scrollY > 500) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    }
 });
+
+// Back to Top Click Event
+const backToTopBtn = document.getElementById('back-to-top');
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // Add fade-in animation for elements when they come into view
 const observerOptions = {

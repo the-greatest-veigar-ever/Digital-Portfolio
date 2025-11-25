@@ -1,0 +1,168 @@
+/* Experience Section */
+.experience {
+    background: var(--bg-primary);
+}
+
+.timeline {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.timeline-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-date {
+    background: var(--accent-color);
+    color: var(--nav-bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+    height: fit-content;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.timeline-content {
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px var(--card-shadow);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 200px;
+}
+
+.timeline-content:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--card-shadow);
+}
+
+.timeline-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-family: 'Fira Code', monospace;
+}
+
+.timeline-content h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.timeline-content ul {
+    padding-left: 20px;
+}
+
+.timeline-content li {
+    margin-bottom: 0.4rem;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+}
+
+.timeline-content li::marker {
+    content: '▸ ';
+    color: var(--accent-color);
+}
+
+/* Sub-list styling for nested bullet points */
+.sub-list {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 0;
+}
+
+.sub-list li {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-accent);
+    font-weight: 400;
+}
+
+.sub-list li::before {
+    content: '◦ ';
+    color: var(--accent-color);
+    font-size: 1.2em;
+    margin-right: 8px;
+}
+
+/* Timeline specific sub-list */
+.timeline-content .sub-list li::marker {
+    content: none;
+}
+
+@media (max-width: 768px) {
+    .timeline {
+        padding: 0 10px;
+    }
+
+    .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-date {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .timeline-content {
+        padding: 20px;
+        min-height: auto;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+
+    .timeline-content h4 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    .timeline-content li {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+    }
+
+    .sub-list li {
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-content {
+        padding: 15px;
+    }
+
+    .timeline-content h3 {
+        font-size: 1rem;
+    }
+
+    .timeline-content h4 {
+        font-size: 0.9rem;
+    }
+
+    .timeline-content li {
+        font-size: 0.8rem;
+    }
+
+    .sub-list li {
+        font-size: 0.7rem;
+    }
+}

@@ -1,0 +1,46 @@
+/* CSS Variables for Light/Dark Theme */
+:root {
+    /* Light theme colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-accent: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-accent: #495057;
+    --nav-bg: #ffffff;
+    --nav-text: #212529;
+    --hero-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --hero-text: #212529;
+    --accent-color: #28a745;
+    --accent-hover: #218838;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --border-color: #dee2e6;
+    --footer-bg: #f8f9fa;
+    --footer-text: #6c757d;
+    --glow-color: rgba(40, 167, 69, 0.2);
+    --text-glow: rgba(40, 167, 69, 0.1);
+}
+
+[data-theme="dark"] {
+    /* Dark theme colors */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-accent: #21262d;
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --text-accent: #c9d1d9;
+    --nav-bg: #010409;
+    --nav-text: #f0f6fc;
+    --hero-bg: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    --hero-text: #f0f6fc;
+    --accent-color: #00ff41;
+    --accent-hover: #00cc33;
+    --card-bg: #21262d;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --border-color: #30363d;
+    --footer-bg: #010409;
+    --footer-text: #8b949e;
+    --glow-color: rgba(0, 255, 65, 0.3);
+    --text-glow: rgba(0, 255, 65, 0.3);
+}
