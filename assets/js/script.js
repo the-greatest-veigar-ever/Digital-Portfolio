@@ -1,4 +1,4 @@
-// Theme Management
+
 class ThemeManager {
     constructor() {
         this.theme = localStorage.getItem('theme') || 'light';
@@ -47,10 +47,7 @@ class ThemeManager {
     }
 }
 
-// Initialize theme manager
-const themeManager = new ThemeManager();
 
-// Mobile Navigation Management
 class MobileNav {
     constructor() {
         this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');

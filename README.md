@@ -7,7 +7,7 @@
 
 ---
 
-## 👨‍💻 Professional Profile
+## Professional Profile
 
 Passionate **Security Team Member** specializing in cybersecurity risk assessments, compliance frameworks, and infrastructure security. I combine technical expertise in **ISO 27001**, **PCI-DSS**, and **Cloud Security** with a strong commitment to leadership and mentoring.
 
@@ -17,19 +17,19 @@ Passionate **Security Team Member** specializing in cybersecurity risk assessmen
 
 ---
 
-## 🛡️ Certifications & Awards
+## Certifications & Awards
 
 | Badge | Certification / Award | Date |
 | :---: | :--- | :--- |
 | ![Security+](https://img.shields.io/badge/CompTIA-Security+-red?style=flat-square) | **CompTIA Security+ (SY-701)** | Valid |
 | ![ISC2](https://img.shields.io/badge/ISC2-SSCP-orange?style=flat-square) | **Systems Security Certified Practitioner (SSCP)** | Valid |
 | ![ISC2](https://img.shields.io/badge/ISC2-CC-orange?style=flat-square) | **Certified in Cybersecurity (CC)** | Valid |
-| 🏆 | **Young Leader for Vietnam** (McKinsey & Co.) | Oct 2025 |
-| 🥈 | **VP Bank Tech Hackathon Finale** (AWS Cloud Security) | July 2025 |
+| | **Young Leader for Vietnam** (McKinsey & Co.) | Oct 2025 |
+| | **VP Bank Tech Hackathon Finale** (AWS Cloud Security) | July 2025 |
 
 ---
 
-## 🛠️ Technical Arsenal
+## Technical Arsenal
 
 **Security & Governance**
 ![ISO27001](https://img.shields.io/badge/Audit-ISO_27001-blue?style=flat-square)
@@ -46,22 +46,22 @@ Passionate **Security Team Member** specializing in cybersecurity risk assessmen
 
 ---
 
-## 🚀 Featured Projects
+## Featured Projects
 
 A collection of personal projects focusing on utility, productivity, and entertainment.
 
 | Project | Type | Description | Link |
 | :--- | :--- | :--- | :---: |
-| **Note Detector** | 🎵 Music/AI | Real-time audio frequency analysis and pitch detection. | [Demo](https://music-note-detector.fly.dev/) |
-| **Fokus** | ⏱️ Productivity | A Pomodoro timer designed for mental optimization. | [Demo](https://the-greatest-veigar-ever.github.io/fokus-pomodoro/) |
-| **GameHub** | 🎮 Gaming | WebRTC-based multiplayer gaming platform. | [Demo](https://the-greatest-veigar-ever.github.io/webrtc-game-hub/) |
-| **Timezone Tracker** | 🌍 Utility | Global time synchronization and visualization tool. | [Demo](https://the-greatest-veigar-ever.github.io/timezone-tracker/) |
-| **Money Servant** | 💰 Utility | Currency management system (Archived). | [Repo](https://github.com/the-greatest-veigar-ever/money-servant.git) |
-| **ASCII Image** | 🖼️ Graphics | Image-to-Text conversion algorithm for terminal art. | [Demo](https://the-greatest-veigar-ever.github.io/ascii-art-generator/) |
+| **Note Detector** | Music/AI | Real-time audio frequency analysis and pitch detection. | [Demo](https://music-note-detector.fly.dev/) |
+| **Fokus** | Productivity | A Pomodoro timer designed for mental optimization. | [Demo](https://the-greatest-veigar-ever.github.io/fokus-pomodoro/) |
+| **GameHub** | Gaming | WebRTC-based multiplayer gaming platform. | [Demo](https://the-greatest-veigar-ever.github.io/webrtc-game-hub/) |
+| **Timezone Tracker** | Utility | Global time synchronization and visualization tool. | [Demo](https://the-greatest-veigar-ever.github.io/timezone-tracker/) |
+| **Money Servant** | Utility | Currency management system (Archived). | [Repo](https://github.com/the-greatest-veigar-ever/money-servant.git) |
+| **ASCII Image** | Graphics | Image-to-Text conversion algorithm for terminal art. | [Demo](https://the-greatest-veigar-ever.github.io/ascii-art-generator/) |
 
 ---
 
-## 💼 Work Experience
+## Work Experience
 
 #### **NAB Innovation Centre Vietnam** (2024 - Present)
 **Security Architect (Junior Level)**
