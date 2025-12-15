@@ -1,52 +1,108 @@
-# Nguyen Minh Quan - Security Architect Portfolio
-
-A professional portfolio website showcasing security architecture expertise, leadership experience, and technical skills.
-
-## 🚀 Features
-
-- **Responsive Design**: Works on all device sizes
-- **Dark/Light Mode**: Toggle between themes with keyboard shortcut (Ctrl/Cmd + D)
-- **Tech Aesthetic**: Typewriter fonts and cybersecurity-themed styling
-- **Interactive Elements**: Smooth animations and hover effects
-- **Professional Sections**: Work experience, certifications, technical skills
-
-## 📁 Project Structure
-
-```
-Portfolio/
-├── index.html              # Main HTML file
-├── assets/
-│   ├── css/
-│   │   └── styles.css      # Main stylesheet
-│   ├── js/
-│   │   └── script.js       # JavaScript functionality
-│   └── images/             # Image assets (if needed)
-├── README.md               # Project documentation
-└── .gitignore             # Git ignore file
+```text
+▄████▄   ██   ██  ▄▄▄▄███▄▄▄▄      ████████▄     ████████▄  ████████▄  ████████▄     ███    
+███    ██  ██   ██ ▄██▀▀▀███▀▀▀██▄    ███   ▀███   ███   ▀███ ███   ▀███ ███   ▀███   ▀███    
+███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
+███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
+███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
+███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
+▀████▀███  ▀████▀  ▀█   ███   █▀     ███   ▄███   ███   ▄███ ███   ▄███ ███   ▄███     ███    
+        ███                ███          ████████▀     ████████▀  ████████▀  ████████▀    ▄████▄  
+     ▄████▀                 ▀▀                                                                   
 ```
 
-## 🛠️ Technologies Used
+```bash
+> INITIALIZING KERNEL... [OK]
+> MOUNTING FILE SYSTEM... [OK]
+> VERIFYING USER IDENTITY...
+```
 
-- **HTML5**: Semantic structure
-- **CSS3**: Modern styling with CSS variables for theming
-- **JavaScript**: Theme management and interactive features
-- **Font Awesome**: Icons
-- **Google Fonts**: JetBrains Mono & Fira Code (tech fonts)
+# SYSTEM_STATUS: ONLINE
 
-## 🌐 Hosting
-
-This portfolio is ready for hosting on:
-- GitHub Pages
-- Netlify
-- Vercel
-- Any static hosting service
-
-## 👤 Contact
-
-- **Email**: programmerquannguyen@gmail.com
-- **LinkedIn**: [linkedin.com/in/quanng47](https://www.linkedin.com/in/quanng47/)
-- **Location**: Ho Chi Minh City, Vietnam
+| PARAMETER | VALUE |
+| :--- | :--- |
+| **USER_ID** | `NGUYEN_MINH_QUAN` |
+| **CLASS** | `SECURITY_ARCHITECT_[JUNIOR]` |
+| **LOCATION** | `VIETNAM_NODE` |
+| **UPTIME** | `2+ YEARS` |
+| **STATUS** | `READY_FOR_DEPLOYMENT` |
 
 ---
 
-© 2025 Nguyen Minh Quan. All rights reserved.
+## >_ RUNNING_PROCESSES (Experience)
+
+```log
+[2024-PRESENT] PID:1024 [NAB_INNOVATION_CENTRE]
+  > EXEC: Security Architect
+  > ACT: Risk_Assessment, Compliance_Audit (ISO27001, PCI-DSS)
+  > STAT: Delivered "Enterprise Security Gateway" migration.
+  > STAT: Maintained 100% compliance on "Customer-Exposed Assets".
+
+[2023-2024]    PID:0512 [ITECHWX_LIMITED]
+  > EXEC: Infrastructure Technical Support
+  > ACT: SysAdmin, Microsoft_System_Center, PowerShell_Automation
+  > STAT: Optimized SQL/SSRS pipelines. 90%+ SLA metric achieved.
+```
+
+---
+
+## >_ LOADED_MODULES (Projects)
+
+```yaml
+MOUNT_POINT: /usr/bin/personal_projects
+ACCESS_LEVEL: PUBLIC
+```
+
+*   **[./Note_Detector](https://music-note-detector.fly.dev/)**
+    *   `TYPE`: Music/AI
+    *   `DESC`: Real-time audio frequency analysis.
+    *   `STATUS`: [ACTIVE]
+
+*   **[./Fokus](https://the-greatest-veigar-ever.github.io/fokus-pomodoro/)**
+    *   `TYPE`: Productivity
+    *   `DESC`: Pomodoro timer for mental optimization.
+    *   `STATUS`: [ACTIVE]
+
+*   **[./GameHub](https://the-greatest-veigar-ever.github.io/webrtc-game-hub/)**
+    *   `TYPE`: Entertainment
+    *   `DESC`: WebRTC multiplayer gaming platform.
+    *   `STATUS`: [ACTIVE]
+
+*   **[./Timezone_Tracker](https://the-greatest-veigar-ever.github.io/timezone-tracker/)**
+    *   `TYPE`: Utility
+    *   `DESC`: Global time synchronization tool.
+    *   `STATUS`: [ACTIVE]
+
+*   **[./Money_Servant](https://github.com/the-greatest-veigar-ever/money-servant.git)**
+    *   `TYPE`: Finance/Utility
+    *   `DESC`: Currency management system.
+    *   `STATUS`: [ARCHIVED]
+
+*   **[./ASCII_Image](https://the-greatest-veigar-ever.github.io/ascii-art-generator/)**
+    *   `TYPE`: Graphics
+    *   `DESC`: Image-to-Text conversion algorithm.
+    *   `STATUS`: [ACTIVE]
+
+---
+
+## >_ CERTIFICATE_AUTHORITY (Certifications)
+
+```diff
++ [VALIDATED] Young Leader for Vietnam (McKinsey & Co.)
++ [VALIDATED] VP Bank Technology Hackathon Finale (Cloud Security)
++ [VALIDATED] RMIT Emerging Leaders Mentor (Best Mentor Award)
++ [VALIDATED] ISC2 SSCP (Systems Security Certified Practitioner)
++ [VALIDATED] ISC2 CC (Certified in Cybersecurity)
++ [VALIDATED] CompTIA Security+ (SY-701)
+```
+
+---
+
+## >_ ESTABLISH_CONNECTION
+
+```bash
+$ ssh programmerquannguyen@gmail.com
+$ open https://linkedin.com/in/quanng47
+$ ping 84-905-47-2003
+```
+
+> END OF TRANSMISSION_
