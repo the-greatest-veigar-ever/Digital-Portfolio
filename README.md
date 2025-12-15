@@ -1,108 +1,80 @@
-```text
-▄████▄   ██   ██  ▄▄▄▄███▄▄▄▄      ████████▄     ████████▄  ████████▄  ████████▄     ███    
-███    ██  ██   ██ ▄██▀▀▀███▀▀▀██▄    ███   ▀███   ███   ▀███ ███   ▀███ ███   ▀███   ▀███    
-███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
-███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
-███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
-███    ██  ██   ██ ███   ███   ███    ███    ███   ███    ███ ███    ███ ███    ███     ███    
-▀████▀███  ▀████▀  ▀█   ███   █▀     ███   ▄███   ███   ▄███ ███   ▄███ ███   ▄███     ███    
-        ███                ███          ████████▀     ████████▀  ████████▀  ████████▀    ▄████▄  
-     ▄████▀                 ▀▀                                                                   
-```
+# Nguyen Minh Quan
+### Security Architect [Junior Lv.] @ NAB Innovation Centre Vietnam
 
-```bash
-> INITIALIZING KERNEL... [OK]
-> MOUNTING FILE SYSTEM... [OK]
-> VERIFYING USER IDENTITY...
-```
-
-# SYSTEM_STATUS: ONLINE
-
-| PARAMETER | VALUE |
-| :--- | :--- |
-| **USER_ID** | `NGUYEN_MINH_QUAN` |
-| **CLASS** | `SECURITY_ARCHITECT_[JUNIOR]` |
-| **LOCATION** | `VIETNAM_NODE` |
-| **UPTIME** | `2+ YEARS` |
-| **STATUS** | `READY_FOR_DEPLOYMENT` |
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/quanng47/)
+[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=flat-square&logo=gmail)](mailto:programmerquannguyen@gmail.com)
+[![Location](https://img.shields.io/badge/Location-Ho_Chi_Minh_City,_VN-4285F4?style=flat-square&logo=google-maps)](https://goo.gl/maps/generic)
 
 ---
 
-## >_ RUNNING_PROCESSES (Experience)
+## 👨‍💻 Professional Profile
 
-```log
-[2024-PRESENT] PID:1024 [NAB_INNOVATION_CENTRE]
-  > EXEC: Security Architect
-  > ACT: Risk_Assessment, Compliance_Audit (ISO27001, PCI-DSS)
-  > STAT: Delivered "Enterprise Security Gateway" migration.
-  > STAT: Maintained 100% compliance on "Customer-Exposed Assets".
+Passionate **Security Team Member** specializing in cybersecurity risk assessments, compliance frameworks, and infrastructure security. I combine technical expertise in **ISO 27001**, **PCI-DSS**, and **Cloud Security** with a strong commitment to leadership and mentoring.
 
-[2023-2024]    PID:0512 [ITECHWX_LIMITED]
-  > EXEC: Infrastructure Technical Support
-  > ACT: SysAdmin, Microsoft_System_Center, PowerShell_Automation
-  > STAT: Optimized SQL/SSRS pipelines. 90%+ SLA metric achieved.
-```
+*   **Current Role:** Driving security initiatives and compliance for the Business, Private & Digital Banking division at NAB.
+*   **Mission:** Advancing cybersecurity standards, inspiring leadership, and creating global impact.
+*   **Mentorship:** "Best Mentor" awardee for RMIT Emerging Leaders Project.
 
 ---
 
-## >_ LOADED_MODULES (Projects)
+## 🛡️ Certifications & Awards
 
-```yaml
-MOUNT_POINT: /usr/bin/personal_projects
-ACCESS_LEVEL: PUBLIC
-```
-
-*   **[./Note_Detector](https://music-note-detector.fly.dev/)**
-    *   `TYPE`: Music/AI
-    *   `DESC`: Real-time audio frequency analysis.
-    *   `STATUS`: [ACTIVE]
-
-*   **[./Fokus](https://the-greatest-veigar-ever.github.io/fokus-pomodoro/)**
-    *   `TYPE`: Productivity
-    *   `DESC`: Pomodoro timer for mental optimization.
-    *   `STATUS`: [ACTIVE]
-
-*   **[./GameHub](https://the-greatest-veigar-ever.github.io/webrtc-game-hub/)**
-    *   `TYPE`: Entertainment
-    *   `DESC`: WebRTC multiplayer gaming platform.
-    *   `STATUS`: [ACTIVE]
-
-*   **[./Timezone_Tracker](https://the-greatest-veigar-ever.github.io/timezone-tracker/)**
-    *   `TYPE`: Utility
-    *   `DESC`: Global time synchronization tool.
-    *   `STATUS`: [ACTIVE]
-
-*   **[./Money_Servant](https://github.com/the-greatest-veigar-ever/money-servant.git)**
-    *   `TYPE`: Finance/Utility
-    *   `DESC`: Currency management system.
-    *   `STATUS`: [ARCHIVED]
-
-*   **[./ASCII_Image](https://the-greatest-veigar-ever.github.io/ascii-art-generator/)**
-    *   `TYPE`: Graphics
-    *   `DESC`: Image-to-Text conversion algorithm.
-    *   `STATUS`: [ACTIVE]
+| Badge | Certification / Award | Date |
+| :---: | :--- | :--- |
+| ![Security+](https://img.shields.io/badge/CompTIA-Security+-red?style=flat-square) | **CompTIA Security+ (SY-701)** | Valid |
+| ![ISC2](https://img.shields.io/badge/ISC2-SSCP-orange?style=flat-square) | **Systems Security Certified Practitioner (SSCP)** | Valid |
+| ![ISC2](https://img.shields.io/badge/ISC2-CC-orange?style=flat-square) | **Certified in Cybersecurity (CC)** | Valid |
+| 🏆 | **Young Leader for Vietnam** (McKinsey & Co.) | Oct 2025 |
+| 🥈 | **VP Bank Tech Hackathon Finale** (AWS Cloud Security) | July 2025 |
 
 ---
 
-## >_ CERTIFICATE_AUTHORITY (Certifications)
+## 🛠️ Technical Arsenal
 
-```diff
-+ [VALIDATED] Young Leader for Vietnam (McKinsey & Co.)
-+ [VALIDATED] VP Bank Technology Hackathon Finale (Cloud Security)
-+ [VALIDATED] RMIT Emerging Leaders Mentor (Best Mentor Award)
-+ [VALIDATED] ISC2 SSCP (Systems Security Certified Practitioner)
-+ [VALIDATED] ISC2 CC (Certified in Cybersecurity)
-+ [VALIDATED] CompTIA Security+ (SY-701)
-```
+**Security & Governance**
+![ISO27001](https://img.shields.io/badge/Audit-ISO_27001-blue?style=flat-square)
+![PCI-DSS](https://img.shields.io/badge/Compliance-PCI__DSS-blue?style=flat-square)
+![NIST](https://img.shields.io/badge/Framework-NIST_CSF-blue?style=flat-square)
+![STRIDE](https://img.shields.io/badge/Modeling-STRIDE-blue?style=flat-square)
+
+**Infrastructure & Tools**
+![AWS](https://img.shields.io/badge/Cloud-AWS-232F3E?style=flat-square&logo=amazon-aws)
+![Azure](https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square&logo=microsoft-azure)
+![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=flat-square&logo=docker)
+![Python](https://img.shields.io/badge/Scripting-Python-3776AB?style=flat-square&logo=python)
+![PowerShell](https://img.shields.io/badge/Scripting-PowerShell-5391FE?style=flat-square&logo=powershell)
 
 ---
 
-## >_ ESTABLISH_CONNECTION
+## 🚀 Featured Projects
 
-```bash
-$ ssh programmerquannguyen@gmail.com
-$ open https://linkedin.com/in/quanng47
-$ ping 84-905-47-2003
-```
+A collection of personal projects focusing on utility, productivity, and entertainment.
 
-> END OF TRANSMISSION_
+| Project | Type | Description | Link |
+| :--- | :--- | :--- | :---: |
+| **Note Detector** | 🎵 Music/AI | Real-time audio frequency analysis and pitch detection. | [Demo](https://music-note-detector.fly.dev/) |
+| **Fokus** | ⏱️ Productivity | A Pomodoro timer designed for mental optimization. | [Demo](https://the-greatest-veigar-ever.github.io/fokus-pomodoro/) |
+| **GameHub** | 🎮 Gaming | WebRTC-based multiplayer gaming platform. | [Demo](https://the-greatest-veigar-ever.github.io/webrtc-game-hub/) |
+| **Timezone Tracker** | 🌍 Utility | Global time synchronization and visualization tool. | [Demo](https://the-greatest-veigar-ever.github.io/timezone-tracker/) |
+| **Money Servant** | 💰 Utility | Currency management system (Archived). | [Repo](https://github.com/the-greatest-veigar-ever/money-servant.git) |
+| **ASCII Image** | 🖼️ Graphics | Image-to-Text conversion algorithm for terminal art. | [Demo](https://the-greatest-veigar-ever.github.io/ascii-art-generator/) |
+
+---
+
+## 💼 Work Experience
+
+#### **NAB Innovation Centre Vietnam** (2024 - Present)
+**Security Architect (Junior Level)**
+*   Conducted security risk assessments for Enterprise Security Gateway migration.
+*   Managed executive-approved risk deferrals, ensuring 100% compliance for customer-exposed assets.
+*   Performed Cloud Service (SaaS) risk assessments and due diligence using STRIDE.
+
+#### **ItechWX Limited Company** (2023 - 2024)
+**Infrastructure Technical Support Engineer**
+*   Supported Microsoft System Center Suite (SCOM, SCCM) for enterprise customers.
+*   Deployed Windows Server 2016 and managed Active Directory environments.
+*   Automated tasks using PowerShell and optimized SQL Server reporting.
+
+---
+
+© 2025 Nguyen Minh Quan. All rights reserved.
