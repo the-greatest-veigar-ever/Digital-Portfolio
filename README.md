@@ -1,4 +1,4 @@
-# Nguyen Minh Quan
+# Nguyen Minh Quan (Garold Nguyễn)
 ### Security Architect [Junior Lv.] @ NAB Innovation Centre Vietnam
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/quanng47/)
@@ -77,4 +77,4 @@ A collection of personal projects focusing on utility, productivity, and enterta
 
 ---
 
-© 2025 Nguyen Minh Quan. All rights reserved.
+© 2025 Nguyen Minh Quan (Garold Nguyễn). All rights reserved.
