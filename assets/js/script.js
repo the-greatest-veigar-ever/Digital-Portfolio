@@ -47,6 +47,9 @@ class ThemeManager {
     }
 }
 
+// Initialize ThemeManager
+const themeManager = new ThemeManager();
+
 
 class MobileNav {
     constructor() {
