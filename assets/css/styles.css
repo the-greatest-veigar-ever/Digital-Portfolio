@@ -9,6 +9,7 @@
 @import 'components/navbar.css';
 @import 'components/buttons.css';
 @import 'components/footer.css';
+@import 'components/hacker.css';
 
 /* Sections */
 @import 'sections/hero.css';

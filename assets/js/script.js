@@ -247,8 +247,187 @@ class TypeWriter {
     }
 }
 
-// Initialize TypeWriter
+// Cyber Network Background
+class NetworkAnimation {
+    constructor() {
+        this.canvas = document.getElementById('network-canvas');
+        if (!this.canvas) return;
+
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.mouse = { x: null, y: null };
+        this.particleCount = window.innerWidth < 768 ? 50 : 100;
+
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+
+        // Mouse tracking
+        document.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY + window.scrollY; // Adjust for scroll
+        });
+
+        // Initialize particles
+        for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push(new Particle(this.canvas));
+        }
+
+        this.animate();
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight; // Full viewport height for hero
+        // Re-adjust particle count on resize if needed
+    }
+
+    animate() {
+        requestAnimationFrame(() => this.animate());
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.particles.forEach(particle => {
+            particle.update();
+            particle.draw(this.ctx);
+            this.connect(particle);
+        });
+
+        this.connectMouse();
+    }
+
+    connect(particle) {
+        let opacityValue = 1;
+        for (let a = 0; a < this.particles.length; a++) {
+            let dx = particle.x - this.particles[a].x;
+            let dy = particle.y - this.particles[a].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 100) {
+                opacityValue = 1 - (distance / 100);
+                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                this.ctx.strokeStyle = isDark
+                    ? `rgba(0, 255, 65, ${opacityValue * 0.2})`
+                    : `rgba(0, 100, 0, ${opacityValue * 0.1})`; // Darker green for light mode
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                this.ctx.moveTo(particle.x, particle.y);
+                this.ctx.lineTo(this.particles[a].x, this.particles[a].y);
+                this.ctx.stroke();
+            }
+        }
+    }
+
+    connectMouse() {
+        // Only connect if mouse is over hero section roughly
+        if (window.scrollY > this.canvas.height) return;
+
+        this.particles.forEach(particle => {
+            let dx = particle.x - this.mouse.x;
+            let dy = particle.y - this.mouse.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+                let opacityValue = 1 - (distance / 150);
+                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                this.ctx.strokeStyle = isDark
+                    ? `rgba(0, 255, 65, ${opacityValue * 0.5})`
+                    : `rgba(0, 150, 0, ${opacityValue * 0.3})`;
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                this.ctx.moveTo(particle.x, particle.y);
+                this.ctx.lineTo(this.mouse.x, this.mouse.y);
+                this.ctx.stroke();
+            }
+        });
+    }
+}
+
+class Particle {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 1; // Velocity
+        this.vy = (Math.random() - 0.5) * 1;
+        this.size = Math.random() * 2 + 1;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce off edges
+        if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
+    }
+
+    draw(ctx) {
+        let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        ctx.fillStyle = isDark ? 'rgba(0, 255, 65, 0.5)' : 'rgba(0, 100, 0, 0.5)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+
+// Hacker Mode Easter Egg
+class HackerMode {
+    constructor() {
+        this.secret = 'hack';
+        this.input = '';
+        this.timer = null;
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('keydown', (e) => {
+            this.input += e.key.toLowerCase();
+
+            // Clear input if no key pressed for 1 second (resets detection)
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.input = '';
+            }, 1000);
+
+            // Check match
+            if (this.input.includes(this.secret)) {
+                this.activate();
+                this.input = '';
+            }
+        });
+    }
+
+    activate() {
+        const body = document.body;
+        const overlay = document.getElementById('access-granted');
+
+        // Toggle Mode
+        if (body.classList.contains('hacker-mode')) {
+            body.classList.remove('hacker-mode');
+            // Optional: Show "ACCESS DENIED" or "LOGGING OUT" if wanted, but simpler to just toggle off
+        } else {
+            body.classList.add('hacker-mode');
+
+            // Show Overlay
+            if (overlay) {
+                overlay.classList.add('show');
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                }, 2000);
+            }
+
+            console.log("%c SYSTEM OVERRIDE INITIATED... WELCOME, ADMIN. ", "background: #000; color: #0f0; font-size: 20px; font-weight: bold;");
+        }
+    }
+}
+
+// Initialize TypeWriter, Network & Hacker Mode
 document.addEventListener('DOMContentLoaded', () => {
+    // TypeWriter
     const typingElement = document.querySelector('.typing-text');
     const cursor = document.querySelector('.cursor');
     const roles = [
@@ -261,6 +440,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typingElement && cursor) {
         new TypeWriter(typingElement, cursor, roles);
     }
+
+    // Network Animation
+    new NetworkAnimation();
+
+    // Hacker Mode
+    new HackerMode();
 });
 document.addEventListener('DOMContentLoaded', () => {
     const animateElements = document.querySelectorAll('.cert-card, .timeline-item, .skill-category, .stat');
