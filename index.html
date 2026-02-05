@@ -68,7 +68,8 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Quân Nguyễn Minh</h1>
-            <h2 style="font-size: 1.5rem; color: var(--text-secondary); margin-top: -0.5rem; margin-bottom: 1rem;">
+            <h2 class="nickname"
+                style="font-size: 1.5rem; color: var(--text-secondary); margin-top: -0.5rem; margin-bottom: 1rem;">
                 (Garold Nguyễn)</h2>
             <h2>Security Architect [Junior Lv.] @NAB VN</h2>
             <p>Passionate about advancing cybersecurity, inspiring leadership, and creating global impact.</p>
@@ -189,112 +190,29 @@
     <section id="projects" class="projects">
         <div class="container">
             <h2 class="section-title">Personal Projects</h2>
-            <div class="circular-carousel-container">
-                <!-- Center Display -->
-                <div class="carousel-center">
-                    <div class="center-content" id="centerContent">
-                        <div class="center-project-icon">
-                            <i class="fas fa-circle" id="centerIcon"></i>
-                        </div>
-                        <h3 class="center-project-title" id="centerTitle">Select a Project</h3>
-                        <p class="center-project-description" id="centerDescription">Click on any project bubble to view
-                            details</p>
-                        <div class="center-project-actions">
-                            <a href="#" class="center-btn primary" id="centerDemoBtn" target="_blank"
-                                style="display: none;">
-                                <i class="fas fa-play"></i>
-                                Demo
+            <div class="circular-carousel-container project-portal-wrapper">
+                <div class="portal-card">
+                    <div class="portal-glow"></div>
+                    <div class="portal-content">
+
+                        <h3 class="portal-title">Project Dashboard</h3>
+                        <p class="portal-description">
+                            Access my complete portfolio of personal projects, experiments, and development tools in one
+                            interactive dashboard.
+                        </p>
+                        <div class="portal-actions">
+                            <a href="https://the-greatest-veigar-ever.github.io/dashboard-mgmt/" target="_blank"
+                                class="portal-btn primary">
+                                <span>Launch Dashboard</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            <a href="https://github.com/the-greatest-veigar-ever" target="_blank"
+                                class="portal-btn secondary">
+                                <i class="fab fa-github"></i>
+                                <span>View GitHub</span>
                             </a>
                         </div>
                     </div>
-                </div>
-
-
-                <div class="carousel-wheel" id="carouselWheel">
-                    <div class="project-orbit" data-project="0">
-                        <div class="project-bubble active" data-icon="fas fa-music" data-title="Note Detector"
-                            data-description="music++" data-demo="https://music-note-detector.fly.dev/">
-                            <div class="bubble-icon">
-                                <i class="fas fa-music"></i>
-                            </div>
-                            <div class="bubble-title">Note Detector</div>
-                            <div class="bubble-category">Music</div>
-                        </div>
-                    </div>
-
-                    <div class="project-orbit" data-project="1">
-                        <div class="project-bubble" data-icon="fa-solid fa-laptop" data-title="Fokus"
-                            data-description="productivity++"
-                            data-demo="https://the-greatest-veigar-ever.github.io/fokus-pomodoro/">
-                            <div class="bubble-icon">
-                                <i class="fa-solid fa-laptop"></i>
-                            </div>
-                            <div class="bubble-title">Fokus</div>
-                            <div class="bubble-category">Productivity</div>
-                        </div>
-                    </div>
-                    <div class="project-orbit" data-project="2">
-                        <div class="project-bubble" data-icon="fa-solid fa-gamepad" data-title="GameHub"
-                            data-description="gaming++"
-                            data-demo="https://the-greatest-veigar-ever.github.io/webrtc-game-hub/">
-                            <div class="bubble-icon">
-                                <i class="fa-solid fa-gamepad"></i>
-                            </div>
-                            <div class="bubble-title">GameHub</div>
-                            <div class="bubble-category">Entertainment</div>
-                        </div>
-                    </div>
-                    <div class="project-orbit" data-project="3">
-                        <div class="project-bubble" data-icon="fa-solid fa-clock" data-title="Timezone Tracker"
-                            data-description="utility++"
-                            data-demo="https://the-greatest-veigar-ever.github.io/timezone-tracker/">
-                            <div class="bubble-icon">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                            <div class="bubble-title">Timezone Tracker</div>
-                            <div class="bubble-category">Utility</div>
-                        </div>
-                    </div>
-                    <div class="project-orbit" data-project="4">
-                        <div class="project-bubble" data-icon="fa-solid fa-code" data-title="ASCII Image"
-                            data-description="utility++"
-                            data-demo="https://the-greatest-veigar-ever.github.io/ascii-art-generator/">
-                            <div class="bubble-icon">
-                                <i class="fa-solid fa-code"></i>
-                            </div>
-                            <div class="bubble-title">ASCII Image</div>
-                            <div class="bubble-category">Utility</div>
-                        </div>
-                    </div>
-                    <div class="project-orbit" data-project="5">
-                        <div class="project-bubble" data-icon="fa-solid fa-coins" data-title="Money Servant"
-                            data-description="utility++"
-                            data-demo="https://github.com/the-greatest-veigar-ever/money-servant.git">
-                            <div class="bubble-icon">
-                                <i class="fa-solid fa-coins"></i>
-                            </div>
-                            <div class="bubble-title">Money Servant</div>
-                            <div class="bubble-category">Utility</div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="carousel-controls">
-                    <button class="carousel-btn prev" id="prevBtn" aria-label="Previous project">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="carousel-indicators">
-                        <span class="indicator active" data-slide="0"></span>
-                        <span class="indicator" data-slide="1"></span>
-                        <span class="indicator" data-slide="2"></span>
-                        <span class="indicator" data-slide="3"></span>
-                        <span class="indicator" data-slide="4"></span>
-                        <span class="indicator" data-slide="5"></span>
-                    </div>
-                    <button class="carousel-btn next" id="nextBtn" aria-label="Next project">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
             </div>
         </div>

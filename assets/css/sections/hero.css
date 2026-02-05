@@ -58,6 +58,10 @@
     content: 'const role = "';
 }
 
+.hero-content h2.nickname::before {
+    content: 'var nickname = "';
+}
+
 .hero-content h2::after {
     content: '";';
 }
