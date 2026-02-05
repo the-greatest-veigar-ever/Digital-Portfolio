@@ -188,23 +188,85 @@ const observerOptions = {
     rootMargin: '0px 0px -50px 0px'
 };
 
+// Observe elements for animation
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            // Add staggered delay based on index in this batch
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 150); // 150ms delay between items
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Observe elements for animation
+
+class TypeWriter {
+    constructor(element, cursor, textList, waitTime = 3000) {
+        this.element = element;
+        this.cursor = cursor;
+        this.textList = textList;
+        this.waitTime = waitTime;
+        this.txt = '';
+        this.wordIndex = 0;
+        this.isDeleting = false;
+        this.type();
+    }
+
+    type() {
+        const current = this.wordIndex % this.textList.length;
+        const fullTxt = this.textList[current];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.element.innerHTML = this.txt;
+
+        let typeSpeed = 50;
+
+        if (this.isDeleting) {
+            typeSpeed /= 2;
+        }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            typeSpeed = this.waitTime;
+            this.isDeleting = true;
+            this.cursor.style.display = 'inline-block'; // Keep blinking while waiting
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.wordIndex++;
+            typeSpeed = 500;
+        }
+
+        setTimeout(() => this.type(), typeSpeed);
+    }
+}
+
+// Initialize TypeWriter
+document.addEventListener('DOMContentLoaded', () => {
+    const typingElement = document.querySelector('.typing-text');
+    const cursor = document.querySelector('.cursor');
+    const roles = [
+        "Security Architect [Junior Lv.] @NAB VN",
+        "Cloud Security Enthusiast",
+        "Software Engineer",
+        "Leadership & Mentoring"
+    ];
+
+    if (typingElement && cursor) {
+        new TypeWriter(typingElement, cursor, roles);
+    }
+});
 document.addEventListener('DOMContentLoaded', () => {
     const animateElements = document.querySelectorAll('.cert-card, .timeline-item, .skill-category, .stat');
 
     animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        // Styles moved to CSS to prevent FOUC
         observer.observe(el);
     });
 

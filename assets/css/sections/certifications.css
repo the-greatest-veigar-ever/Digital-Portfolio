@@ -14,13 +14,16 @@
     padding: 45px;
     border-radius: 10px;
     text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
     min-height: 400px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .cert-card::before {

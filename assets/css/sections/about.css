@@ -63,12 +63,44 @@
     pointer-events: none;
 }
 
+/* Glitch Animation */
+@keyframes glitch-anim {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, -2px);
+    }
+
+    60% {
+        transform: translate(2px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
 .image-container:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow:
         0 25px 50px var(--card-shadow),
         0 10px 25px rgba(0, 0, 0, 0.15),
+        -2px 0 0 rgba(255, 0, 0, 0.2),
+        /* RGB Split */
+        2px 0 0 rgba(0, 0, 255, 0.2),
+        /* RGB Split */
         0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
 }
 
 .image-container:hover::before {
