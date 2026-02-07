@@ -396,7 +396,36 @@ function initMobileImageSwap() {
 }
 
 /* =========================================
-   7. Main Initialization
+   7. Experience Accordion
+   ========================================= */
+function initExperienceAccordion() {
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        // Click handler
+        header.addEventListener('click', () => toggleAccordion(header));
+
+        // Keyboard accessibility (Enter/Space)
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleAccordion(header);
+            }
+        });
+    });
+
+    function toggleAccordion(header) {
+        const item = header.closest('.accordion-item');
+        const isActive = item.classList.contains('active');
+
+        // Toggle the clicked item
+        item.classList.toggle('active');
+        header.setAttribute('aria-expanded', !isActive);
+    }
+}
+
+/* =========================================
+   8. Main Initialization
    ========================================= */
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Theme
@@ -447,6 +476,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Mobile Image Interaction
     initMobileImageSwap();
+
+    // 8. Experience Accordion
+    initExperienceAccordion();
 
     // 8. Smooth Scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
