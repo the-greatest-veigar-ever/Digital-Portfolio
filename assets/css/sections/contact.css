@@ -42,6 +42,7 @@
 .contact-item p {
     color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
+    word-break: break-word;
 }
 
 .social-links {

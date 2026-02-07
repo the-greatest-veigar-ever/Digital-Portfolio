@@ -98,7 +98,7 @@ class MobileNav {
 
         // Close menu when window is resized to desktop
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 968 && this.isOpen) {
+            if (window.innerWidth > 768 && this.isOpen) {
                 this.closeMenu();
             }
         });
