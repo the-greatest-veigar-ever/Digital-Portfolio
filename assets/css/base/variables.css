@@ -1,46 +1,56 @@
-/* CSS Variables for Light/Dark Theme */
+/* CSS Variables for Light/Dark Theme - Premium & Glassmorphism Edition */
 :root {
-    /* Light theme colors */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --bg-accent: #e9ecef;
-    --text-primary: #212529;
-    --text-secondary: #6c757d;
-    --text-accent: #495057;
-    --nav-bg: #ffffff;
-    --nav-text: #212529;
-    --hero-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    --hero-text: #212529;
-    --accent-color: #28a745;
-    --accent-hover: #218838;
-    --card-bg: #ffffff;
-    --card-shadow: rgba(0, 0, 0, 0.1);
-    --border-color: #dee2e6;
-    --footer-bg: #f8f9fa;
-    --footer-text: #6c757d;
-    --glow-color: rgba(40, 167, 69, 0.2);
-    --text-glow: rgba(40, 167, 69, 0.1);
+    /* Light theme colors - Soft, elegant */
+    --bg-primary: #fdfdfd;
+    --bg-secondary: #f4f5f7;
+    --bg-accent: #ebeef1;
+    --text-primary: #1a1c20;
+    --text-secondary: #5c626b;
+    --text-accent: #3a3f46;
+    --nav-bg: rgba(253, 253, 253, 0.85);
+    --nav-text: #1a1c20;
+    --hero-bg: radial-gradient(circle at top right, #f4f5f7 0%, #fdfdfd 100%);
+    --hero-text: #1a1c20;
+    --accent-color: #00b32c;
+    --accent-hover: #008f23;
+    
+    /* Glassmorphism utilities */
+    --card-bg: rgba(255, 255, 255, 0.65);
+    --card-border: rgba(0, 0, 0, 0.05);
+    --glass-blur: blur(16px);
+    
+    --card-shadow: rgba(0, 0, 0, 0.08);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --footer-bg: #f4f5f7;
+    --footer-text: #5c626b;
+    --glow-color: rgba(0, 179, 44, 0.25);
+    --text-glow: rgba(0, 179, 44, 0.2);
 }
 
 [data-theme="dark"] {
-    /* Dark theme colors */
-    --bg-primary: #0d1117;
-    --bg-secondary: #161b22;
-    --bg-accent: #21262d;
-    --text-primary: #f0f6fc;
-    --text-secondary: #8b949e;
-    --text-accent: #c9d1d9;
-    --nav-bg: #010409;
-    --nav-text: #f0f6fc;
-    --hero-bg: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-    --hero-text: #f0f6fc;
+    /* Dark theme colors - Premium Obsidian / Deep Space */
+    --bg-primary: #050508;
+    --bg-secondary: #090a0f;
+    --bg-accent: #11131a;
+    --text-primary: #f0f4f8;
+    --text-secondary: #94a0b8;
+    --text-accent: #cbd5e1;
+    --nav-bg: rgba(5, 5, 8, 0.85);
+    --nav-text: #f0f4f8;
+    --hero-bg: radial-gradient(circle at top right, #090a0f 0%, #050508 100%);
+    --hero-text: #f0f4f8;
     --accent-color: #00ff41;
-    --accent-hover: #00cc33;
-    --card-bg: #21262d;
-    --card-shadow: rgba(0, 0, 0, 0.3);
-    --border-color: #30363d;
-    --footer-bg: #010409;
-    --footer-text: #8b949e;
-    --glow-color: rgba(0, 255, 65, 0.3);
-    --text-glow: rgba(0, 255, 65, 0.3);
+    --accent-hover: #33ff66;
+    
+    /* Glassmorphism utilities */
+    --card-bg: rgba(17, 19, 26, 0.55);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --glass-blur: blur(16px);
+    
+    --card-shadow: rgba(0, 0, 0, 0.5);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --footer-bg: #030304;
+    --footer-text: #717d96;
+    --glow-color: rgba(0, 255, 65, 0.4);
+    --text-glow: rgba(0, 255, 65, 0.5);
 }

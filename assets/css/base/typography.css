@@ -9,7 +9,7 @@ section {
     margin-bottom: 3rem;
     color: var(--text-primary);
     position: relative;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Source Code Pro', monospace;
     font-weight: 600;
 }
 

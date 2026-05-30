@@ -47,7 +47,7 @@
     font-size: 3.5rem;
     margin-bottom: 1rem;
     font-weight: 700;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Source Code Pro', monospace;
     text-shadow: 0 0 20px var(--text-glow);
 }
 
@@ -62,7 +62,7 @@
     color: var(--accent-color);
     margin-bottom: 1rem;
     font-weight: 400;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Source Code Pro', monospace;
 }
 
 .hero-content h2::before {
@@ -71,6 +71,10 @@
 
 .hero-content h2.nickname::before {
     content: 'var nickname = "';
+}
+
+.hero-content h2.cert-line::before {
+    content: 'const cert = "';
 }
 
 .hero-content h2::after {
@@ -84,7 +88,7 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Nunito', sans-serif;
 }
 
 .hero-passion {

@@ -4,12 +4,17 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 110%;
+}
+
 body {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+    padding-left: 250px;
 }
 
 .container {
@@ -51,6 +56,7 @@ html {
     /* Global mobile fixes */
     body {
         overflow-x: hidden;
+        padding-left: 0;
     }
 
     .container {

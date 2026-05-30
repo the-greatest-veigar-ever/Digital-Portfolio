@@ -4,6 +4,6 @@
     color: var(--footer-text);
     text-align: center;
     padding: 20px 0;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Nunito', sans-serif;
     border-top: 1px solid var(--border-color);
 }

@@ -112,7 +112,7 @@
     font-weight: 500;
     margin-bottom: 15px;
     color: var(--text-primary);
-    font-family: 'Fira Code', monospace;
+    font-family: 'Source Code Pro', monospace;
     /* Monospace for terminal feel */
     letter-spacing: -0.5px;
 }
@@ -153,7 +153,7 @@
     text-decoration: none;
     transition: all 0.2s ease;
     font-size: 0.95rem;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Source Code Pro', monospace;
     letter-spacing: 0.5px;
     position: relative;
     overflow: hidden;

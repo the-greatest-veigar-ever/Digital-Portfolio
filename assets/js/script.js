@@ -64,7 +64,7 @@ class ThemeManager {
 class MobileNav {
     constructor() {
         this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        this.navMenu = document.querySelector('.nav-menu');
+        this.navMenu = document.querySelector('.navbar');
         this.overlay = document.getElementById('mobile-menu-overlay');
         this.navLinks = document.querySelectorAll('.nav-link');
         this.isOpen = false;
@@ -132,49 +132,7 @@ class MobileNav {
 /* =========================================
    3. UI Animations (TypeWriter, Staggered)
    ========================================= */
-class TypeWriter {
-    constructor(element, cursor, textList, waitTime = 3000) {
-        this.element = element;
-        this.cursor = cursor;
-        this.textList = textList;
-        this.waitTime = waitTime;
-        this.txt = '';
-        this.wordIndex = 0;
-        this.isDeleting = false;
-        this.type();
-    }
-
-    type() {
-        const current = this.wordIndex % this.textList.length;
-        const fullTxt = this.textList[current];
-
-        if (this.isDeleting) {
-            this.txt = fullTxt.substring(0, this.txt.length - 1);
-        } else {
-            this.txt = fullTxt.substring(0, this.txt.length + 1);
-        }
-
-        this.element.innerHTML = this.txt;
-
-        let typeSpeed = 50;
-
-        if (this.isDeleting) {
-            typeSpeed /= 2;
-        }
-
-        if (!this.isDeleting && this.txt === fullTxt) {
-            typeSpeed = this.waitTime;
-            this.isDeleting = true;
-            this.cursor.style.display = 'inline-block'; // Keep blinking while waiting
-        } else if (this.isDeleting && this.txt === '') {
-            this.isDeleting = false;
-            this.wordIndex++;
-            typeSpeed = 500;
-        }
-
-        setTimeout(() => this.type(), typeSpeed);
-    }
-}
+// TypeWriter class removed - now using GSAP TextPlugin
 
 /* =========================================
    4. Cyber Network Visuals
@@ -416,11 +374,33 @@ function initExperienceAccordion() {
 
     function toggleAccordion(header) {
         const item = header.closest('.accordion-item');
+        const content = item.querySelector('.accordion-content');
         const isActive = item.classList.contains('active');
 
-        // Toggle the clicked item
-        item.classList.toggle('active');
-        header.setAttribute('aria-expanded', !isActive);
+        // Close all other accordions smoothly
+        document.querySelectorAll('.accordion-item').forEach(otherItem => {
+            if (otherItem !== item && otherItem.classList.contains('active')) {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', false);
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(otherItem.querySelector('.accordion-content'), {height: 0, opacity: 0, duration: 0.4, ease: "power2.inOut"});
+                }
+            }
+        });
+
+        if (isActive) {
+            item.classList.remove('active');
+            header.setAttribute('aria-expanded', false);
+            if (typeof gsap !== 'undefined') {
+                gsap.to(content, {height: 0, opacity: 0, duration: 0.4, ease: "power2.inOut"});
+            }
+        } else {
+            item.classList.add('active');
+            header.setAttribute('aria-expanded', true);
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(content, {height: 0, opacity: 0}, {height: "auto", opacity: 1, duration: 0.4, ease: "power2.inOut"});
+            }
+        }
     }
 }
 
@@ -428,44 +408,127 @@ function initExperienceAccordion() {
    8. Main Initialization
    ========================================= */
 document.addEventListener('DOMContentLoaded', () => {
+    // Register GSAP Plugins & Hero Entrance
+    if (typeof gsap !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        
+        // Hero Entrance Timeline
+        const heroTl = gsap.timeline();
+        heroTl.fromTo('.navbar', { x: -250, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" })
+              .fromTo('.nav-link', { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
+              .fromTo('.hero-content h1', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.5)" }, "-=0.4")
+              .fromTo('.hero-content .nickname', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.6")
+              .fromTo('.hero-content h2', { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.2")
+              .fromTo('.hero-content p', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+              .fromTo('.hero-buttons .btn', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)" }, "-=0.4");
+              
+        // Magnetic Buttons
+        const magneticElements = document.querySelectorAll('.btn, .social-link');
+        magneticElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(el, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    }
+
     // 1. Initialize Theme
     const themeManager = new ThemeManager();
 
     // 2. Initialize Navigation
     const mobileNav = new MobileNav();
 
-    // 3. Initialize Animations (Staggered)
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    // 3. Advanced GSAP Animations (Premium Effects)
+    if (typeof gsap !== 'undefined') {
+        // A. General fade-in for standard elements
+        const animateElements = gsap.utils.toArray('.timeline-item, .skill-category, .pok-card');
+        animateElements.forEach((el) => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                {
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.2)"
+                }
+            );
+        });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 150);
-                observer.unobserve(entry.target);
+        // B. 3D Tilt Hover Effect for Premium Cards
+        const tiltElements = document.querySelectorAll('.stat, .cert-card, .pok-card');
+        tiltElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -10;
+                const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+                gsap.to(el, { rotateX: rotateX, rotateY: rotateY, duration: 0.4, ease: "power2.out", transformPerspective: 1000 });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // C. Staggered 3D Flip Entrance for Certificates
+        gsap.fromTo('.cert-card', 
+            { y: 80, opacity: 0, rotationX: -20 },
+            { 
+                scrollTrigger: { trigger: '.cert-grid', start: "top 85%" }, 
+                y: 0, opacity: 1, rotationX: 0, stagger: 0.15, duration: 1, ease: "power3.out", transformPerspective: 1000 
+            }
+        );
+
+        // D. Number Counter & Dynamic Entrance for About Stats
+        const statsContainers = document.querySelectorAll('.stat');
+        gsap.fromTo(statsContainers, 
+            { y: 40, opacity: 0, scale: 0.9 },
+            { scrollTrigger: { trigger: '.about-stats', start: "top 90%" }, y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.8, ease: "back.out(1.5)" }
+        );
+
+        const numbers = document.querySelectorAll('.stat h3');
+        numbers.forEach(num => {
+            const text = num.innerText;
+            if (text.includes('+')) {
+                const target = parseInt(text);
+                // Reset text to 0 initially
+                num.innerText = '0+';
+                gsap.to(num, {
+                    scrollTrigger: { trigger: num, start: "top 90%" },
+                    innerText: target,
+                    duration: 2.5,
+                    ease: "power3.out",
+                    snap: { innerText: 1 },
+                    onUpdate: function() { num.innerText = this.targets()[0].innerText + '+'; }
+                });
+            } else {
+                gsap.fromTo(num, { opacity: 0, filter: "blur(5px)" }, {
+                    scrollTrigger: { trigger: num, start: "top 90%" },
+                    opacity: 1, filter: "blur(0px)", duration: 1.5, delay: 0.3, ease: "power2.out"
+                });
             }
         });
-    }, observerOptions);
+    }
 
-    const animateElements = document.querySelectorAll('.cert-card, .timeline-item, .skill-category, .stat');
-    animateElements.forEach(el => observer.observe(el));
-
-    // 4. Initialize TypeWriter
+    // 4. Initialize TypeWriter (GSAP TextPlugin) - Cycles through certificates
     const typingElement = document.querySelector('.typing-text');
     const cursor = document.querySelector('.cursor');
-    const roles = [
-        "Security Architect [Junior Lv.] @NAB VN",
-        "Cloud Security Enthusiast",
-        "Software Engineer",
-        "Leadership & Mentoring"
+    const certs = [
+        "ISC2 SSCP",
+        "ISC2 CC",
+        "CompTIA Security+ (SY-701)"
     ];
-    if (typingElement && cursor) {
-        new TypeWriter(typingElement, cursor, roles);
+    if (typingElement && cursor && typeof gsap !== 'undefined') {
+        gsap.to(cursor, { opacity: 0, ease: "power2.inOut", repeat: -1, yoyo: true, duration: 0.5 });
+        let masterTl = gsap.timeline({ repeat: -1 });
+        certs.forEach(cert => {
+            let tl = gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 2 });
+            tl.to(typingElement, { duration: Math.max(cert.length * 0.05, 1), text: cert, ease: "none" });
+            masterTl.add(tl);
+        });
     }
 
     // 5. Initialize Network Animation
@@ -500,24 +563,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.addEventListener('scroll', () => {
-        // Scroll Spy
-        let current = '';
+    // GSAP-powered dynamic scroll spy for sidebar
+    if (typeof gsap !== 'undefined') {
+        const allNavLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('section');
+
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
+            const sectionId = section.getAttribute('id');
+            const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+
+            if (correspondingLink) {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top center',
+                    end: 'bottom center',
+                    onEnter: () => activateLink(correspondingLink),
+                    onEnterBack: () => activateLink(correspondingLink),
+                });
             }
         });
 
-        // Back to Top Visibility
+        function activateLink(activeLink) {
+            // Remove active from all links
+            allNavLinks.forEach(link => {
+                if (link !== activeLink && link.classList.contains('active')) {
+                    link.classList.remove('active');
+                    gsap.to(link, { paddingLeft: 0, color: 'var(--nav-text)', duration: 0.3, ease: 'power2.out' });
+                }
+            });
+            // Add active to the current link
+            if (!activeLink.classList.contains('active')) {
+                activeLink.classList.add('active');
+                gsap.to(activeLink, { paddingLeft: 10, color: 'var(--accent-color)', duration: 0.3, ease: 'power2.out' });
+            }
+        }
+    }
+
+    // Back to Top Visibility
+    window.addEventListener('scroll', () => {
         if (backToTopBtn) {
             if (scrollY > 500) {
                 backToTopBtn.classList.add('visible');

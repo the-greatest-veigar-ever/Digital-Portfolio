@@ -43,7 +43,7 @@
     color: var(--text-primary);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Source Code Pro', monospace;
     text-align: center;
 }
 
@@ -61,7 +61,7 @@
     padding: 8px 0;
     color: var(--text-secondary);
     border-bottom: 1px solid var(--border-color);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Nunito', sans-serif;
     position: relative;
 }
 
