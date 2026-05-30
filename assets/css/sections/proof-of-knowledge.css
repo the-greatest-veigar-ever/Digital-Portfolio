@@ -86,7 +86,7 @@
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .pok-grid {
         grid-template-columns: 1fr;
     }

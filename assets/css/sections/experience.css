@@ -181,7 +181,7 @@
 }
 
 /* Tablet Responsive */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .accordion-header {
         grid-template-columns: 1fr auto;
         gap: 1rem;

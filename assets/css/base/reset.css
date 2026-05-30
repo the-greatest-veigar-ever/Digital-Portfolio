@@ -51,7 +51,7 @@ html {
     background: var(--accent-hover);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
 
     /* Global mobile fixes */
     body {

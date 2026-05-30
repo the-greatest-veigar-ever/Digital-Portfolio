@@ -75,7 +75,7 @@
     border-bottom: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .skills-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;

@@ -177,7 +177,7 @@
     font-family: 'Nunito', sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .about-content {
         grid-template-columns: 1fr;
         text-align: center;
