@@ -686,9 +686,9 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.to(cursor, { opacity: 0, ease: "power2.inOut", repeat: -1, yoyo: true, duration: 0.5 });
         let masterTl = gsap.timeline({ repeat: -1 });
         certs.forEach(cert => {
-            let tl = gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 2 });
-            tl.to(typingElement, { duration: Math.max(cert.length * 0.05, 1), text: cert, ease: "none" });
-            masterTl.add(tl);
+            let duration = Math.max(cert.length * 0.05, 1);
+            masterTl.to(typingElement, { duration: duration, text: cert, ease: "none" })
+                    .to(typingElement, { duration: duration, text: "", ease: "none", delay: 2 });
         });
     }
 
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝
 ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝
 
-🔐 Security Architect Portfolio
+🔐 Security Associate Portfolio
 💻 Built with passion for cybersecurity
 🎯 Keyboard shortcuts: Ctrl/Cmd + D (toggle theme)
 🕹️ Try typing "hack" ...
