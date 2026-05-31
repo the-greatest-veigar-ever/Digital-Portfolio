@@ -100,9 +100,7 @@
             <p>Passionate about advancing cybersecurity, inspiring leadership, and creating global impact.</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn secondary">Get In Touch</a>
-                <a href="assets/docs/NguyenMinhQuan_CV.pdf" target="_blank" class="btn secondary">
-                    <i class="fas fa-file-download"></i> Download CV
-                </a>
+                <a href="assets/docs/NguyenMinhQuan_CV.pdf" target="_blank" class="btn secondary">Download CV</a>
             </div>
         </div>
     </section>
@@ -496,6 +494,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
     <script src="assets/js/script.js?v=2026053110"></script>
+
+    <!-- Firebase SDK Setup -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBLUWzTIlxHxC_u6-P_1K-iYn8QVn7aYA0",
+        authDomain: "digital-portfolio-dc046.firebaseapp.com",
+        projectId: "digital-portfolio-dc046",
+        storageBucket: "digital-portfolio-dc046.firebasestorage.app",
+        messagingSenderId: "656310424605",
+        appId: "1:656310424605:web:8c32dfc95a0c0f2cf922f4",
+        measurementId: "G-53S3VES2ST"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
 </body>
 
 </html>
