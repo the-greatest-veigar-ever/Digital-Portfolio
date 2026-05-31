@@ -32,42 +32,12 @@
     border: 2px solid var(--accent-color);
 }
 
-/* Glitch Animation */
-@keyframes glitch-anim-btn {
-    0% {
-        transform: translate(0) translateY(-2px);
-    }
-
-    20% {
-        transform: translate(-2px, 2px) translateY(-2px);
-    }
-
-    40% {
-        transform: translate(-2px, -2px) translateY(-2px);
-    }
-
-    60% {
-        transform: translate(2px, 2px) translateY(-2px);
-    }
-
-    80% {
-        transform: translate(2px, -2px) translateY(-2px);
-    }
-
-    100% {
-        transform: translate(0) translateY(-2px);
-    }
-}
-
 .btn.primary:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
+    background: transparent;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
     transform: translateY(-2px);
-    box-shadow:
-        0 5px 15px var(--glow-color),
-        -2px 0 0 rgba(255, 0, 0, 0.2),
-        2px 0 0 rgba(0, 0, 255, 0.2);
-    animation: glitch-anim-btn 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    box-shadow: 0 5px 15px var(--glow-color);
 }
 
 .btn.secondary {

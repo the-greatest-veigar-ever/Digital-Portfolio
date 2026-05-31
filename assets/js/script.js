@@ -142,26 +142,68 @@ class Particle {
         this.canvas = canvas;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 1; // Velocity
-        this.vy = (Math.random() - 0.5) * 1;
-        this.size = Math.random() * 2 + 1;
+        this.baseVx = (Math.random() - 0.5) * 1.5;
+        this.baseVy = (Math.random() - 0.5) * 1.5;
+        this.vx = this.baseVx;
+        this.vy = this.baseVy;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.parallaxFactor = this.size * 0.3; // Larger particles move more
     }
 
-    update() {
+    update(mouseX, mouseY) {
         this.x += this.vx;
         this.y += this.vy;
 
+        // Friction to return to base velocity after shockwave
+        this.vx += (this.baseVx - this.vx) * 0.05;
+        this.vy += (this.baseVy - this.vy) * 0.05;
+
         // Bounce off edges
-        if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > this.canvas.width) {
+            this.baseVx *= -1;
+            this.vx *= -1;
+            this.x = Math.max(0, Math.min(this.canvas.width, this.x));
+        }
+        if (this.y < 0 || this.y > this.canvas.height) {
+            this.baseVy *= -1;
+            this.vy *= -1;
+            this.y = Math.max(0, Math.min(this.canvas.height, this.y));
+        }
+
+        // Magnetic Pull
+        if (mouseX !== null && mouseY !== null) {
+            let dx = mouseX - this.x;
+            let dy = mouseY - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 180) {
+                let force = (180 - distance) / 180;
+                this.x += dx * force * 0.02 * this.parallaxFactor;
+                this.y += dy * force * 0.02 * this.parallaxFactor;
+            }
+        }
     }
 
-    draw(ctx) {
+    draw(ctx, mouseX, mouseY) {
         let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        ctx.fillStyle = isDark ? 'rgba(0, 255, 65, 0.5)' : 'rgba(0, 100, 0, 0.5)';
+        
+        let drawX = this.x;
+        let drawY = this.y;
+        
+        // Parallax Offset
+        if (mouseX !== null && mouseY !== null) {
+            let pOffsetX = (mouseX - window.innerWidth / 2) * 0.05 * this.parallaxFactor;
+            let pOffsetY = (mouseY - window.innerHeight / 2) * 0.05 * this.parallaxFactor;
+            drawX -= pOffsetX;
+            drawY -= pOffsetY;
+        }
+
+        ctx.fillStyle = isDark ? `rgba(0, 255, 65, ${0.4 + this.size*0.1})` : `rgba(0, 150, 0, ${0.4 + this.size*0.1})`;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
         ctx.fill();
+        
+        return {x: drawX, y: drawY};
     }
 }
 
@@ -173,7 +215,7 @@ class NetworkAnimation {
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.mouse = { x: null, y: null };
-        this.particleCount = window.innerWidth < 768 ? 50 : 100;
+        this.particleCount = window.innerWidth < 768 ? 60 : 120;
 
         this.init();
     }
@@ -182,81 +224,119 @@ class NetworkAnimation {
         this.resize();
         window.addEventListener('resize', () => this.resize());
 
-        // Mouse tracking
         document.addEventListener('mousemove', (e) => {
-            this.mouse.x = e.clientX;
-            this.mouse.y = e.clientY + window.scrollY; // Adjust for scroll
+            const rect = this.canvas.getBoundingClientRect();
+            const scaleX = this.canvas.width / rect.width;
+            const scaleY = this.canvas.height / rect.height;
+            this.mouse.x = (e.clientX - rect.left) * scaleX;
+            this.mouse.y = (e.clientY - rect.top) * scaleY;
         });
 
-        // Initialize particles
+        document.addEventListener('mouseleave', () => {
+            this.mouse.x = null;
+            this.mouse.y = null;
+        });
+
+        // Click Shockwave
+        document.addEventListener('click', (e) => {
+            if (window.scrollY > this.canvas.height) return;
+            const rect = this.canvas.getBoundingClientRect();
+            const scaleX = this.canvas.width / rect.width;
+            const scaleY = this.canvas.height / rect.height;
+            this.triggerShockwave(
+                (e.clientX - rect.left) * scaleX,
+                (e.clientY - rect.top) * scaleY
+            );
+        });
+
         for (let i = 0; i < this.particleCount; i++) {
             this.particles.push(new Particle(this.canvas));
         }
 
-        this.animate();
+        // GSAP Ticker for optimized rendering
+        gsap.ticker.add(() => this.animate());
+    }
+
+    triggerShockwave(x, y) {
+        this.particles.forEach(p => {
+            let dx = p.x - x;
+            let dy = p.y - y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 300) {
+                let force = (300 - distance) / 300;
+                gsap.to(p, {
+                    vx: p.baseVx + (dx / distance) * force * 20,
+                    vy: p.baseVy + (dy / distance) * force * 20,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            }
+        });
     }
 
     resize() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight; // Full viewport height for hero
+        this.canvas.width = this.canvas.parentElement.offsetWidth;
+        this.canvas.height = this.canvas.parentElement.offsetHeight;
     }
 
     animate() {
-        requestAnimationFrame(() => this.animate());
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        let drawnPositions = [];
+
         this.particles.forEach(particle => {
-            particle.update();
-            particle.draw(this.ctx);
-            this.connect(particle);
+            particle.update(this.mouse.x, this.mouse.y);
+            let pos = particle.draw(this.ctx, this.mouse.x, this.mouse.y);
+            drawnPositions.push(pos);
         });
 
-        this.connectMouse();
+        this.connect(drawnPositions);
     }
 
-    connect(particle) {
-        for (let a = 0; a < this.particles.length; a++) {
-            let dx = particle.x - this.particles[a].x;
-            let dy = particle.y - this.particles[a].y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
+    connect(positions) {
+        let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        for (let a = 0; a < positions.length; a++) {
+            for (let b = a + 1; b < positions.length; b++) {
+                let dx = positions[a].x - positions[b].x;
+                let dy = positions[a].y - positions[b].y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < 100) {
-                let opacityValue = 1 - (distance / 100);
-                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                this.ctx.strokeStyle = isDark
-                    ? `rgba(0, 255, 65, ${opacityValue * 0.2})`
-                    : `rgba(0, 100, 0, ${opacityValue * 0.1})`; // Darker green for light mode
-                this.ctx.lineWidth = 1;
-                this.ctx.beginPath();
-                this.ctx.moveTo(particle.x, particle.y);
-                this.ctx.lineTo(this.particles[a].x, this.particles[a].y);
-                this.ctx.stroke();
+                if (distance < 120) {
+                    let opacityValue = 1 - (distance / 120);
+                    this.ctx.strokeStyle = isDark
+                        ? `rgba(0, 255, 65, ${opacityValue * 0.25})`
+                        : `rgba(0, 150, 0, ${opacityValue * 0.15})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(positions[a].x, positions[a].y);
+                    this.ctx.lineTo(positions[b].x, positions[b].y);
+                    this.ctx.stroke();
+                }
             }
         }
-    }
 
-    connectMouse() {
-        // Only connect if mouse is over hero section roughly
-        if (window.scrollY > this.canvas.height) return;
+        // Connect Mouse
+        if (this.mouse.x !== null && this.mouse.y !== null && window.scrollY <= this.canvas.height) {
+            positions.forEach(pos => {
+                let dx = pos.x - this.mouse.x;
+                let dy = pos.y - this.mouse.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
 
-        this.particles.forEach(particle => {
-            let dx = particle.x - this.mouse.x;
-            let dy = particle.y - this.mouse.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 150) {
-                let opacityValue = 1 - (distance / 150);
-                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                this.ctx.strokeStyle = isDark
-                    ? `rgba(0, 255, 65, ${opacityValue * 0.5})`
-                    : `rgba(0, 150, 0, ${opacityValue * 0.3})`;
-                this.ctx.lineWidth = 1;
-                this.ctx.beginPath();
-                this.ctx.moveTo(particle.x, particle.y);
-                this.ctx.lineTo(this.mouse.x, this.mouse.y);
-                this.ctx.stroke();
-            }
-        });
+                if (distance < 180) {
+                    let opacityValue = 1 - (distance / 180);
+                    this.ctx.strokeStyle = isDark
+                        ? `rgba(0, 255, 65, ${opacityValue * 0.6})`
+                        : `rgba(0, 150, 0, ${opacityValue * 0.4})`;
+                    this.ctx.lineWidth = 1.5;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(pos.x, pos.y);
+                    this.ctx.lineTo(this.mouse.x, this.mouse.y);
+                    this.ctx.stroke();
+                }
+            });
+        }
     }
 }
 
@@ -313,48 +393,7 @@ class HackerMode {
 }
 
 /* =========================================
-   6. Mobile Image Interaction
-   ========================================= */
-function initMobileImageSwap() {
-    const imageContainer = document.querySelector('.image-container');
-    const primaryImage = document.querySelector('.profile-image.primary');
-    const secondaryImage = document.querySelector('.profile-image.secondary');
-
-    if (!imageContainer || !primaryImage || !secondaryImage) return;
-
-    // Detect mobile device
-    const isMobile = window.innerWidth <= 768;
-
-    if (isMobile) {
-        let isSecondaryVisible = false;
-
-        imageContainer.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            if (!isSecondaryVisible) {
-                // Show secondary image
-                primaryImage.style.opacity = '0';
-                secondaryImage.style.opacity = '1';
-                isSecondaryVisible = true;
-
-                // Auto-hide after 3 seconds
-                setTimeout(() => {
-                    primaryImage.style.opacity = '1';
-                    secondaryImage.style.opacity = '0';
-                    isSecondaryVisible = false;
-                }, 3000);
-            } else {
-                // Return to primary image
-                primaryImage.style.opacity = '1';
-                secondaryImage.style.opacity = '0';
-                isSecondaryVisible = false;
-            }
-        });
-    }
-}
-
-/* =========================================
-   7. Experience Accordion
+   6. Experience Accordion
    ========================================= */
 function initExperienceAccordion() {
     const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -383,7 +422,7 @@ function initExperienceAccordion() {
                 otherItem.classList.remove('active');
                 otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', false);
                 if (typeof gsap !== 'undefined') {
-                    gsap.to(otherItem.querySelector('.accordion-content'), {height: 0, opacity: 0, duration: 0.4, ease: "power2.inOut"});
+                    gsap.to(otherItem.querySelector('.accordion-content'), {height: 0, opacity: 0, duration: 0.3, ease: "power2.out"});
                 }
             }
         });
@@ -392,13 +431,13 @@ function initExperienceAccordion() {
             item.classList.remove('active');
             header.setAttribute('aria-expanded', false);
             if (typeof gsap !== 'undefined') {
-                gsap.to(content, {height: 0, opacity: 0, duration: 0.4, ease: "power2.inOut"});
+                gsap.to(content, {height: 0, opacity: 0, duration: 0.3, ease: "power2.out"});
             }
         } else {
             item.classList.add('active');
             header.setAttribute('aria-expanded', true);
             if (typeof gsap !== 'undefined') {
-                gsap.fromTo(content, {height: 0, opacity: 0}, {height: "auto", opacity: 1, duration: 0.4, ease: "power2.inOut"});
+                gsap.fromTo(content, {height: 0, opacity: 0}, {height: "auto", opacity: 1, duration: 0.4, ease: "power2.out"});
             }
         }
     }
@@ -422,8 +461,31 @@ document.addEventListener('DOMContentLoaded', () => {
               .fromTo('.hero-content p', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
               .fromTo('.hero-buttons .btn', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)" }, "-=0.4");
               
+        // Hero Parallax Scrub
+        gsap.to('.hero-content', {
+            yPercent: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+        
+        gsap.to('#network-canvas', {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+              
         // Magnetic Buttons
-        const magneticElements = document.querySelectorAll('.btn, .social-link');
+        const magneticElements = document.querySelectorAll('.social-link');
         magneticElements.forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
@@ -446,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Advanced GSAP Animations (Premium Effects)
     if (typeof gsap !== 'undefined') {
         // A. General fade-in for standard elements
-        const animateElements = gsap.utils.toArray('.timeline-item, .skill-category, .pok-card');
+        const animateElements = gsap.utils.toArray('.timeline-item, .pok-card');
         animateElements.forEach((el) => {
             gsap.fromTo(el, 
                 { y: 50, opacity: 0 },
@@ -457,8 +519,27 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         });
 
+        // Advanced Image Reveal (About Section)
+        const aboutImages = document.querySelectorAll('.profile-image');
+        if (aboutImages.length > 0) {
+            gsap.fromTo(aboutImages, 
+                { clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)", scale: 1.1 },
+                { 
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", 
+                    scale: 1,
+                    duration: 1.2, 
+                    ease: "power3.inOut",
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".about-images",
+                        start: "top 80%"
+                    }
+                }
+            );
+        }
+
         // B. 3D Tilt Hover Effect for Premium Cards
-        const tiltElements = document.querySelectorAll('.stat, .cert-card, .pok-card');
+        const tiltElements = document.querySelectorAll('.stat, .pok-card');
         tiltElements.forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
@@ -511,6 +592,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+
+        // E. Skills Micro-Staggering
+        const skillCategories = document.querySelectorAll('.skill-category');
+        skillCategories.forEach(category => {
+            const items = category.querySelectorAll('li');
+            gsap.fromTo(category,
+                { y: 30, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.6, ease: "power2.out",
+                    scrollTrigger: { trigger: category, start: "top 85%" }
+                }
+            );
+            if(items.length > 0) {
+                gsap.fromTo(items,
+                    { x: -10, opacity: 0 },
+                    {
+                        x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out",
+                        scrollTrigger: { trigger: category, start: "top 85%" }
+                    }
+                );
+            }
+        });
+
+        // F. Portal Glow Rotation
+        const portalGlow = document.querySelector('.portal-glow');
+        if (portalGlow) {
+            gsap.to(portalGlow, {
+                rotation: 360,
+                duration: 20,
+                repeat: -1,
+                ease: "linear"
+            });
+            // Pulse effect
+            gsap.to(portalGlow, {
+                scale: 1.05,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        }
+
+        // G. Contact Section Stagger
+        const contactItems = document.querySelectorAll('.contact-item');
+        if (contactItems.length > 0) {
+            gsap.fromTo(contactItems,
+                { x: -30, opacity: 0 },
+                {
+                    x: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "elastic.out(1, 0.7)",
+                    scrollTrigger: { trigger: ".contact-info", start: "top 85%" }
+                }
+            );
+        }
+        
+        const socialLinks = document.querySelectorAll('.social-links .social-link');
+        if (socialLinks.length > 0) {
+            gsap.fromTo(socialLinks,
+                { y: 30, opacity: 0, scale: 0.5 },
+                {
+                    y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.5)",
+                    scrollTrigger: { trigger: ".social-links", start: "top 90%" }
+                }
+            );
+        }
+
+        // H. Experience Timeline Progress
+        const experienceSection = document.querySelector('.experience-accordion');
+        const progressBar = document.querySelector('.timeline-progress-bar');
+        if (experienceSection && progressBar) {
+            gsap.to(progressBar, {
+                height: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: experienceSection,
+                    start: "top center",
+                    end: "bottom center",
+                    scrub: true
+                }
+            });
+        }
     }
 
     // 4. Initialize TypeWriter (GSAP TextPlugin) - Cycles through certificates
@@ -536,9 +697,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 6. Initialize Hacker Mode
     new HackerMode();
-
-    // 7. Mobile Image Interaction
-    initMobileImageSwap();
 
     // 8. Experience Accordion
     initExperienceAccordion();
