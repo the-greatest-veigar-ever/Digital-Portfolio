@@ -615,23 +615,116 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // F. Portal Glow Rotation
-        const portalGlow = document.querySelector('.portal-glow');
-        if (portalGlow) {
-            gsap.to(portalGlow, {
-                rotation: 360,
-                duration: 20,
-                repeat: -1,
-                ease: "linear"
+        // F. Projects Slideshow
+        const slideshowTrack = document.getElementById('slideshow-track');
+        const slides = document.querySelectorAll('.project-slide');
+        const prevBtn = document.getElementById('slide-prev');
+        const nextBtn = document.getElementById('slide-next');
+        const dotsContainer = document.getElementById('slideshow-dots');
+        const counterEl = document.getElementById('slideshow-counter');
+
+        if (slideshowTrack && slides.length > 0) {
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            // Generate dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('button');
+                dot.classList.add('slideshow-dot');
+                dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+
+            function updateCounter() {
+                if (counterEl) counterEl.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            }
+
+            function updateDots() {
+                const dots = dotsContainer.querySelectorAll('.slideshow-dot');
+                dots.forEach((dot, i) => {
+                    if (i === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            function goToSlide(index) {
+                if (index === currentSlide) return;
+                const direction = index > currentSlide ? 1 : -1;
+                const oldSlide = slides[currentSlide];
+                currentSlide = index;
+                const newSlide = slides[currentSlide];
+
+                // Animate track position
+                gsap.to(slideshowTrack, {
+                    x: `-${currentSlide * 100}%`,
+                    duration: 0.5,
+                    ease: "power2.inOut"
+                });
+
+                // Fade content of new slide
+                gsap.fromTo(newSlide.querySelector('.project-card'), 
+                    { opacity: 0.4, y: direction * 15 },
+                    { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.1 }
+                );
+
+                updateDots();
+                updateCounter();
+            }
+
+            function nextSlide() {
+                goToSlide((currentSlide + 1) % totalSlides);
+            }
+
+            function prevSlide() {
+                goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+            }
+
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const projectsSection = document.getElementById('projects');
+                if (!projectsSection) return;
+                const rect = projectsSection.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight && rect.bottom > 0;
+                if (!inView) return;
+
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
             });
-            // Pulse effect
-            gsap.to(portalGlow, {
-                scale: 1.05,
-                duration: 2,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
+
+            // Touch swipe support
+            let touchStartX = 0;
+            const slideshowEl = document.getElementById('projects-slideshow');
+            if (slideshowEl) {
+                slideshowEl.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                slideshowEl.addEventListener('touchend', (e) => {
+                    const diff = touchStartX - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) nextSlide();
+                        else prevSlide();
+                    }
+                }, { passive: true });
+            }
+
+            // Entrance animation
+            gsap.fromTo('.projects-slideshow',
+                { y: 40, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+                    scrollTrigger: { trigger: '.projects-slideshow', start: "top 85%" }
+                }
+            );
+
+            updateCounter();
         }
 
         // G. Contact Section Stagger

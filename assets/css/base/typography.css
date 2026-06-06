@@ -9,8 +9,10 @@ section {
     margin-bottom: 3rem;
     color: var(--text-primary);
     position: relative;
-    font-family: 'Source Code Pro', monospace;
+    font-family: var(--font-mono);
     font-weight: 600;
+    letter-spacing: -0.5px;
+    text-wrap: balance;
 }
 
 .section-title::before {

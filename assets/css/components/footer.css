@@ -4,6 +4,11 @@
     color: var(--footer-text);
     text-align: center;
     padding: 20px 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-primary);
     border-top: 1px solid var(--border-color);
+}
+
+.footer-content p {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }

@@ -17,6 +17,7 @@
     border: 1px solid var(--card-border);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-highlight);
     position: relative;
     overflow: hidden;
     min-height: 400px;
@@ -79,7 +80,7 @@
 .cert-card h3 {
     color: var(--text-primary);
     margin-bottom: 1rem;
-    font-family: 'Source Code Pro', monospace;
+    font-family: var(--font-mono);
     font-size: 1.1rem;
     line-height: 1.3;
 }
@@ -99,7 +100,7 @@
 
 .cert-card p {
     color: var(--text-secondary);
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-primary);
     font-size: 0.9rem;
     line-height: 1.5;
     margin-bottom: 0.75rem;
@@ -107,6 +108,13 @@
 
 .cert-card p:last-child {
     margin-bottom: 0;
+}
+
+/* Cert date (moved from inline styles) */
+.cert-date {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-top: 0.5rem;
 }
 
 /* Cert card header area */
@@ -125,7 +133,7 @@
 .cert-card li {
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-primary);
     font-size: 0.9rem;
     line-height: 1.5;
     position: relative;

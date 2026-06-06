@@ -15,7 +15,7 @@
     border-radius: 10px;
     text-align: left;
     border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--glass-highlight);
     position: relative;
     overflow: hidden;
     opacity: 0;
@@ -43,7 +43,7 @@
     color: var(--text-primary);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
-    font-family: 'Source Code Pro', monospace;
+    font-family: var(--font-mono);
     text-align: center;
 }
 
@@ -61,7 +61,7 @@
     padding: 8px 0;
     color: var(--text-secondary);
     border-bottom: 1px solid var(--border-color);
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-primary);
     position: relative;
 }
 
