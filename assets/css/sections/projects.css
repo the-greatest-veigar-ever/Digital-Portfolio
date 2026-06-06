@@ -300,17 +300,16 @@
     }
 
     .project-card {
-        padding: 40px 24px;
-        border: none;
-        background: transparent;
+        padding: 40px 30px;
+        border-radius: 12px;
     }
 
     .project-card h3 {
-        font-size: 1.35rem;
+        font-size: 1.5rem;
     }
 
     .project-card p {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin-bottom: 24px;
     }
 
@@ -331,9 +330,21 @@
         padding: 0 40px;
     }
 
+    .project-card {
+        padding: 30px 20px;
+    }
+
     .slideshow-arrow {
-        width: 32px;
-        height: 32px;
-        font-size: 0.75rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .slideshow-arrow.prev {
+        left: -15px;
+    }
+
+    .slideshow-arrow.next {
+        right: -15px;
     }
 }
