@@ -1,4 +1,15 @@
 /* Hero Section */
+/* Prevent FOUC before GSAP loads */
+html.js-enabled .navbar,
+html.js-enabled .hero-content h1,
+html.js-enabled .hero-content .nickname,
+html.js-enabled .hero-content h2,
+html.js-enabled .hero-content p,
+html.js-enabled .hero-buttons .btn {
+    visibility: hidden;
+    opacity: 0;
+}
+
 .hero {
     background: var(--hero-bg);
     color: var(--hero-text);

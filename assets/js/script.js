@@ -453,13 +453,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Hero Entrance Timeline
         const heroTl = gsap.timeline();
-        heroTl.fromTo('.navbar', { x: -250, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" })
-              .fromTo('.nav-link', { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
-              .fromTo('.hero-content h1', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.5)" }, "-=0.4")
-              .fromTo('.hero-content .nickname', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.6")
-              .fromTo('.hero-content h2', { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.2")
-              .fromTo('.hero-content p', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
-              .fromTo('.hero-buttons .btn', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)" }, "-=0.4");
+        heroTl.fromTo('.navbar', { x: -250, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" })
+              .fromTo('.nav-link', { x: -20, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
+              .fromTo('.hero-content h1', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, ease: "back.out(1.5)" }, "-=0.4")
+              .fromTo('.hero-content .nickname', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" }, "-=0.6")
+              .fromTo('.hero-content h2:not(.nickname)', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2, ease: "power3.out" }, "-=0.2")
+              .fromTo('.hero-content p', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+              .fromTo('.hero-buttons .btn', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2, ease: "back.out(1.5)" }, "-=0.4");
               
         // Hero Parallax Scrub
         gsap.to('.hero-content', {
