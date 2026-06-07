@@ -10,7 +10,7 @@
    ========================================= */
 class ThemeManager {
     constructor() {
-        this.theme = localStorage.getItem('theme') || 'light';
+        this.theme = localStorage.getItem('theme') || 'dark';
         this.init();
     }
 
