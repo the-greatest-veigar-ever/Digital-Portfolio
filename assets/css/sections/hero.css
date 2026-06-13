@@ -21,6 +21,7 @@ html.js-enabled .hero-buttons .btn {
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: none;
 }
 
 .hero::before {

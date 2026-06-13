@@ -147,16 +147,16 @@ class Particle {
         this.vx = this.baseVx;
         this.vy = this.baseVy;
         this.size = Math.random() * 2.5 + 0.5;
-        this.parallaxFactor = this.size * 0.3; // Larger particles move more
+        this.parallaxFactor = this.size * 0.3;
     }
 
     update(mouseX, mouseY) {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Friction to return to base velocity after shockwave
-        this.vx += (this.baseVx - this.vx) * 0.05;
-        this.vy += (this.baseVy - this.vy) * 0.05;
+        // Friction to return to base velocity
+        this.vx += (this.baseVx - this.vx) * 0.04;
+        this.vy += (this.baseVy - this.vy) * 0.04;
 
         // Bounce off edges
         if (this.x < 0 || this.x > this.canvas.width) {
@@ -170,26 +170,26 @@ class Particle {
             this.y = Math.max(0, Math.min(this.canvas.height, this.y));
         }
 
-        // Magnetic Pull
+        // Gentle gravitational pull toward cursor
         if (mouseX !== null && mouseY !== null) {
             let dx = mouseX - this.x;
             let dy = mouseY - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 180) {
-                let force = (180 - distance) / 180;
-                this.x += dx * force * 0.02 * this.parallaxFactor;
-                this.y += dy * force * 0.02 * this.parallaxFactor;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 200 && dist > 1) {
+                let force = (200 - dist) / 200;
+                this.vx += (dx / dist) * force * 0.15;
+                this.vy += (dy / dist) * force * 0.15;
             }
         }
     }
 
     draw(ctx, mouseX, mouseY) {
         let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        
+
         let drawX = this.x;
         let drawY = this.y;
-        
+
         // Parallax Offset
         if (mouseX !== null && mouseY !== null) {
             let pOffsetX = (mouseX - window.innerWidth / 2) * 0.05 * this.parallaxFactor;
@@ -202,7 +202,7 @@ class Particle {
         ctx.beginPath();
         ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
         ctx.fill();
-        
+
         return {x: drawX, y: drawY};
     }
 }
@@ -215,7 +215,8 @@ class NetworkAnimation {
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.mouse = { x: null, y: null };
-        this.particleCount = window.innerWidth < 768 ? 60 : 120;
+        this.particleCount = window.innerWidth < 768 ? 100 : 200;
+        this.time = 0;
 
         this.init();
     }
@@ -253,7 +254,6 @@ class NetworkAnimation {
             this.particles.push(new Particle(this.canvas));
         }
 
-        // GSAP Ticker for optimized rendering
         gsap.ticker.add(() => this.animate());
     }
 
@@ -262,7 +262,7 @@ class NetworkAnimation {
             let dx = p.x - x;
             let dy = p.y - y;
             let distance = Math.sqrt(dx * dx + dy * dy);
-            
+
             if (distance < 300) {
                 let force = (300 - distance) / 300;
                 gsap.to(p, {
@@ -282,6 +282,7 @@ class NetworkAnimation {
 
     animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.time += 0.015;
 
         let drawnPositions = [];
 
@@ -294,9 +295,57 @@ class NetworkAnimation {
         this.connect(drawnPositions);
     }
 
+    /* ---- Minimal Black Hole Renderer ---- */
+    drawBlackhole(cx, cy, isDark) {
+        const ctx = this.ctx;
+        const R = 6;
+        const pulse = Math.sin(this.time * 1.5) * 0.15 + 0.85; // subtle breathing
+
+        ctx.save();
+
+        // 1. Gravitational darkening -- radial void that eats light around it
+        let voidGrad = ctx.createRadialGradient(cx, cy, R * 0.3, cx, cy, R * 3.5);
+        voidGrad.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
+        voidGrad.addColorStop(0.4, 'rgba(0, 0, 0, 0.1)');
+        voidGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = voidGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. Event horizon -- pure black circle
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 3. Photon ring -- single crisp ring with glow
+        let glowColor = isDark ? `rgba(0, 255, 65, ${0.9 * pulse})` : `rgba(0, 200, 50, ${0.8 * pulse})`;
+        let glowColorShadow = isDark ? 'rgba(0, 255, 65, 1)' : 'rgba(0, 200, 50, 1)';
+
+        ctx.shadowColor = glowColorShadow;
+        ctx.shadowBlur = 15 * pulse;
+        ctx.strokeStyle = glowColor;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R + 2, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Second pass for sharper glow bloom
+        ctx.shadowBlur = 8;
+        ctx.strokeStyle = isDark ? `rgba(120, 255, 160, ${0.5 * pulse})` : `rgba(80, 220, 100, ${0.4 * pulse})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R + 4, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+        ctx.restore();
+    }
+
     connect(positions) {
         let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        
+
         for (let a = 0; a < positions.length; a++) {
             for (let b = a + 1; b < positions.length; b++) {
                 let dx = positions[a].x - positions[b].x;
@@ -317,25 +366,9 @@ class NetworkAnimation {
             }
         }
 
-        // Connect Mouse
+        // Draw cursor black hole (no lines, just the void)
         if (this.mouse.x !== null && this.mouse.y !== null && window.scrollY <= this.canvas.height) {
-            positions.forEach(pos => {
-                let dx = pos.x - this.mouse.x;
-                let dy = pos.y - this.mouse.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 180) {
-                    let opacityValue = 1 - (distance / 180);
-                    this.ctx.strokeStyle = isDark
-                        ? `rgba(0, 255, 65, ${opacityValue * 0.6})`
-                        : `rgba(0, 150, 0, ${opacityValue * 0.4})`;
-                    this.ctx.lineWidth = 1.5;
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(pos.x, pos.y);
-                    this.ctx.lineTo(this.mouse.x, this.mouse.y);
-                    this.ctx.stroke();
-                }
-            });
+            this.drawBlackhole(this.mouse.x, this.mouse.y, isDark);
         }
     }
 }
