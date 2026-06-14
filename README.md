@@ -2,7 +2,7 @@
 ### Security Architect [Junior Lv.] @ NAB Innovation Centre Vietnam
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/quanng47/)
-[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=flat-square&logo=gmail)](mailto:programmerquannguyen@gmail.com)
+[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=flat-square&logo=gmail)](mailto:garoldnguyen@gmail.com)
 [![Location](https://img.shields.io/badge/Location-Ho_Chi_Minh_City,_VN-4285F4?style=flat-square&logo=google-maps)](https://goo.gl/maps/generic)
 
 ---
