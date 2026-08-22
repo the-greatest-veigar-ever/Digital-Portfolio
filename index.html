@@ -74,6 +74,7 @@
                 <li><a href="#proof-of-knowledge" class="nav-link">Certificates</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#research" class="nav-link">Research Papers</a></li>
                 <li><a href="#certifications" class="nav-link">Leaderships & Activities</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -325,6 +326,112 @@
                 </button>
                 <div class="slideshow-dots" id="slideshow-dots"></div>
                 <div class="slideshow-counter" id="slideshow-counter"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="research" class="research">
+        <div class="container">
+            <h2 class="section-title">Research Papers</h2>
+            
+            <div class="research-dossier">
+                <div class="research-header">
+                    <div class="research-meta">
+                        <span class="research-status">
+                            <span class="status-dot"></span>
+                            Accepted for Publication
+                        </span>
+                        <span class="meta-sep">/</span>
+                        <span class="research-venue">Springer CCIS (ICONIP 2026)</span>
+                    </div>
+                    <div class="research-actions">
+                        <button class="minimal-btn" id="copy-citation-btn" aria-label="Copy citation">
+                            <i class="fas fa-quote-right"></i>
+                            <span id="copy-btn-text">Copy Citation</span>
+                        </button>
+                        <button class="minimal-btn" id="toggle-bibtex-btn" aria-label="Toggle BibTeX drawer">
+                            <i class="fas fa-code"></i>
+                            <span>BibTeX</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="research-title-block">
+                    <span class="research-track">Cloud Security // Autonomous SLM Systems</span>
+                    <h3 class="research-title">
+                        Ephemeral Polymorphic Defense: A Preliminary Study of Small Language Model Agents for Cloud Security Automation
+                    </h3>
+                    <div class="research-authors">
+                        <span class="author-primary">Quan Nguyen<span class="author-tag">Co-first author</span></span>
+                        <span class="author-sep">,</span>
+                        <span class="author-name">Thach Ngo<span class="author-tag muted">Co-first author</span></span>
+                        <span class="author-sep">,</span>
+                        <span class="author-et-al">et al.</span>
+                    </div>
+                </div>
+
+                <div class="research-content-grid">
+                    <div class="research-synopsis">
+                        <h4>Abstract & Overview</h4>
+                        <p>
+                            Proposes a lightweight, stateless Small Language Model (SLM) architecture natively embedded within Cloud-Native Application Protection Platforms (CNAPPs) to automate real-time security remediation. Integrates randomized persona injection to mitigate adversarial prompt injections and enforces post-task memory teardown for zero persistent state residue.
+                        </p>
+                        <div class="research-keywords">
+                            <span>Stateless SLM</span>
+                            <span>Polymorphic Defense</span>
+                            <span>CNAPP Automation</span>
+                            <span>Zero Memory Residue</span>
+                        </div>
+                    </div>
+
+                    <div class="research-mechanisms">
+                        <h4>Key Mechanisms</h4>
+                        <div class="mechanism-list">
+                            <div class="mechanism-item">
+                                <span class="mechanism-num">01</span>
+                                <div class="mechanism-text">
+                                    <strong>Demand-Driven Ingestion</strong>
+                                    <p>Remediation triggers instantiate stateless SLM agents on-demand within micro-isolated runtimes.</p>
+                                </div>
+                            </div>
+                            <div class="mechanism-item">
+                                <span class="mechanism-num">02</span>
+                                <div class="mechanism-text">
+                                    <strong>Randomized Persona Injection</strong>
+                                    <p>Applies runtime prompt polymorphism to neutralize adversarial injection and jailbreak payloads.</p>
+                                </div>
+                            </div>
+                            <div class="mechanism-item">
+                                <span class="mechanism-num">03</span>
+                                <div class="mechanism-text">
+                                    <strong>Post-Task Ephemeral Teardown</strong>
+                                    <p>Eradicates context and memory post-execution, eliminating persistent state and balancing Attack vs. Task Success Rate.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Minimal BibTeX Drawer -->
+                <div class="bibtex-drawer" id="bibtex-drawer">
+                    <div class="bibtex-header">
+                        <span>bibtex-entry.bib</span>
+                        <button class="minimal-btn" id="copy-bibtex-raw" aria-label="Copy BibTeX">
+                            <i class="fas fa-copy"></i>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                    <pre class="bibtex-code"><code>@inproceedings{ngo2026ephemeral,
+  title={Ephemeral Polymorphic Defense: A Preliminary Study of Small Language Model Agents for Cloud Security Automation},
+  author={Ngo, Thach and Nguyen, Quan and others},
+  booktitle={International Conference on Neural Information Processing (ICONIP 2026)},
+  series={Communications in Computer and Information Science (CCIS)},
+  publisher={Springer},
+  year={2026},
+  note={Accepted for publication}
+}</code></pre>
+                </div>
             </div>
         </div>
     </section>

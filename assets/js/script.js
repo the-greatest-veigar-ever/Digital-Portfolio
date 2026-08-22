@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hero Entrance Timeline
         const heroTl = gsap.timeline();
         heroTl.fromTo('.navbar', { x: -250, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" })
-              .fromTo('.nav-link', { x: -20, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
+              .fromTo('.nav-link', { x: -20, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, stagger: 0.1, ease: "power2.out", clearProps: "transform,opacity,visibility" }, "-=0.4")
               .fromTo('.hero-content h1', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, ease: "back.out(1.5)" }, "-=0.4")
               .fromTo('.hero-content .nickname', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" }, "-=0.6")
               .fromTo('.hero-content h2:not(.nickname)', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2, ease: "power3.out" }, "-=0.2")
@@ -595,6 +595,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 y: 0, opacity: 1, rotationX: 0, stagger: 0.15, duration: 1, ease: "power3.out", transformPerspective: 1000 
             }
         );
+
+        // Research Dossier Entrance
+        if (document.querySelector('.research-dossier')) {
+            gsap.fromTo('.research-dossier',
+                { y: 35, opacity: 0 },
+                {
+                    scrollTrigger: { trigger: '#research', start: "top 85%" },
+                    y: 0, opacity: 1, duration: 0.8, ease: "power3.out"
+                }
+            );
+            gsap.fromTo('.mechanism-item',
+                { y: 15, opacity: 0 },
+                {
+                    scrollTrigger: { trigger: '.mechanism-list', start: "top 90%" },
+                    y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power2.out"
+                }
+            );
+        }
 
         // D. Number Counter & Dynamic Entrance for About Stats
         const statsContainers = document.querySelectorAll('.stat');
@@ -827,19 +845,133 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. Experience Accordion
     initExperienceAccordion();
 
-    // 8. Smooth Scrolling
+    // 8. Robust Smooth Scrolling & Unified Scroll Spy
+    const allNavLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    let isClickScrolling = false;
+    let scrollSpyTimer = null;
+
+    function setActiveNavLink(targetId) {
+        if (!targetId) return;
+        allNavLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === `#${targetId}`) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+            // Clear any lingering inline styles
+            link.style.paddingLeft = '';
+            link.style.color = '';
+        });
+    }
+
+    // Unified Smooth Scrolling Click Handlers
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             if (this.id === 'centerDemoBtn' || this.hasAttribute('target')) return;
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+
+            const target = document.querySelector(targetId);
             if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                e.preventDefault();
+
+                // Immediately highlight active link
+                isClickScrolling = true;
+                clearTimeout(scrollSpyTimer);
+                setActiveNavLink(targetId.substring(1));
+
+                // Smoothly scroll to exact destination
+                const targetTop = target.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                    top: targetTop,
+                    behavior: 'smooth'
+                });
+
+                // Unlock scroll spy after smooth scroll settles
+                scrollSpyTimer = setTimeout(() => {
+                    isClickScrolling = false;
+                    updateScrollSpy();
+                }, 800);
             }
         });
     });
 
-    // 9. Scroll Spy & Back to Top
+    // Highly Accurate Scroll Spy
+    function updateScrollSpy() {
+        if (isClickScrolling) return;
+
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+
+        // Bottom of page -> activate last section
+        if (scrollY + windowHeight >= documentHeight - 60) {
+            if (sections.length > 0) {
+                const lastSection = sections[sections.length - 1];
+                setActiveNavLink(lastSection.getAttribute('id'));
+                return;
+            }
+        }
+
+        // Top of page -> activate first section
+        if (scrollY < 120) {
+            if (sections.length > 0) {
+                setActiveNavLink(sections[0].getAttribute('id'));
+                return;
+            }
+        }
+
+        // Check which section intersects the focus line (top 35% of viewport)
+        const triggerPoint = scrollY + (windowHeight * 0.35);
+        let currentSectionId = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (triggerPoint >= sectionTop && triggerPoint < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        // Fallback: select the closest section above trigger point
+        if (!currentSectionId) {
+            for (let i = sections.length - 1; i >= 0; i--) {
+                if (scrollY + 100 >= sections[i].offsetTop) {
+                    currentSectionId = sections[i].getAttribute('id');
+                    break;
+                }
+            }
+        }
+
+        if (currentSectionId) {
+            setActiveNavLink(currentSectionId);
+        }
+    }
+
+    // Scroll event listener with requestAnimationFrame
+    let isScrollTicking = false;
+    window.addEventListener('scroll', () => {
+        if (!isScrollTicking) {
+            window.requestAnimationFrame(() => {
+                updateScrollSpy();
+                isScrollTicking = false;
+            });
+            isScrollTicking = true;
+        }
+
+        // Back to Top Visibility
+        if (backToTopBtn) {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+    }, { passive: true });
+
+    // Back to Top Button
     const backToTopBtn = document.getElementById('back-to-top');
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
@@ -847,52 +979,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // GSAP-powered dynamic scroll spy for sidebar
-    if (typeof gsap !== 'undefined') {
-        const allNavLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section');
-
-        sections.forEach(section => {
-            const sectionId = section.getAttribute('id');
-            const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-
-            if (correspondingLink) {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'top center',
-                    end: 'bottom center',
-                    onEnter: () => activateLink(correspondingLink),
-                    onEnterBack: () => activateLink(correspondingLink),
-                });
-            }
-        });
-
-        function activateLink(activeLink) {
-            // Remove active from all links
-            allNavLinks.forEach(link => {
-                if (link !== activeLink && link.classList.contains('active')) {
-                    link.classList.remove('active');
-                    gsap.to(link, { paddingLeft: 0, color: 'var(--nav-text)', duration: 0.3, ease: 'power2.out' });
-                }
-            });
-            // Add active to the current link
-            if (!activeLink.classList.contains('active')) {
-                activeLink.classList.add('active');
-                gsap.to(activeLink, { paddingLeft: 10, color: 'var(--accent-color)', duration: 0.3, ease: 'power2.out' });
-            }
+    // Initial check on load
+    updateScrollSpy();
+    window.addEventListener('load', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
         }
+        updateScrollSpy();
+    });
+
+    // Research Paper Dossier Interactions
+    const copyCitationBtn = document.getElementById('copy-citation-btn');
+    const toggleBibtexBtn = document.getElementById('toggle-bibtex-btn');
+    const bibtexDrawer = document.getElementById('bibtex-drawer');
+    const copyBibtexRawBtn = document.getElementById('copy-bibtex-raw');
+
+    if (copyCitationBtn) {
+        copyCitationBtn.addEventListener('click', () => {
+            const citationText = "Ngo, T., Nguyen, Q., et al. (2026). Ephemeral Polymorphic Defense: A Preliminary Study of Small Language Model Agents for Cloud Security Automation. Communications in Computer and Information Science (CCIS), Springer. Accepted for publication.";
+            navigator.clipboard.writeText(citationText).then(() => {
+                const btnText = document.getElementById('copy-btn-text');
+                const origText = btnText ? btnText.innerText : 'Copy Citation';
+                if (btnText) btnText.innerText = "Citation Copied!";
+                copyCitationBtn.classList.add('copied');
+                setTimeout(() => {
+                    if (btnText) btnText.innerText = origText;
+                    copyCitationBtn.classList.remove('copied');
+                }, 2500);
+            }).catch(() => {
+                prompt("Copy citation:", citationText);
+            });
+        });
     }
 
-    // Back to Top Visibility
-    window.addEventListener('scroll', () => {
-        if (backToTopBtn) {
-            if (scrollY > 500) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        }
-    });
+    if (toggleBibtexBtn && bibtexDrawer) {
+        toggleBibtexBtn.addEventListener('click', () => {
+            bibtexDrawer.classList.toggle('open');
+            const isOpen = bibtexDrawer.classList.contains('open');
+            toggleBibtexBtn.style.borderColor = isOpen ? 'var(--accent-color)' : '';
+            toggleBibtexBtn.style.color = isOpen ? 'var(--accent-color)' : '';
+        });
+    }
+
+    if (copyBibtexRawBtn) {
+        copyBibtexRawBtn.addEventListener('click', () => {
+            const codeEl = document.querySelector('.bibtex-code code');
+            const bibtexCode = codeEl ? codeEl.innerText : '';
+            navigator.clipboard.writeText(bibtexCode).then(() => {
+                const span = copyBibtexRawBtn.querySelector('span');
+                const orig = span ? span.innerText : 'Copy BibTeX';
+                if (span) span.innerText = "Copied!";
+                copyBibtexRawBtn.classList.add('copied');
+                setTimeout(() => {
+                    if (span) span.innerText = orig;
+                    copyBibtexRawBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                prompt("Copy BibTeX:", bibtexCode);
+            });
+        });
+    }
 
     // 10. Shortcut Keys
     document.addEventListener('keydown', (e) => {
