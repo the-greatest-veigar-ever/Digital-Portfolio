@@ -179,9 +179,12 @@ class Particle {
         this.vy = this.baseVy;
         this.size = Math.random() * 2.5 + 0.5;
         this.parallaxFactor = this.size * 0.3;
+        this.pulse = 0;
+        this.tagText = '';
+        this.tagUntil = 0;
     }
 
-    update(mouseX, mouseY) {
+    update() {
         this.x += this.vx;
         this.y += this.vy;
 
@@ -200,23 +203,11 @@ class Particle {
             this.vy *= -1;
             this.y = Math.max(0, Math.min(this.canvas.height, this.y));
         }
-
-        // Gentle gravitational pull toward cursor
-        if (mouseX !== null && mouseY !== null) {
-            let dx = mouseX - this.x;
-            let dy = mouseY - this.y;
-            let dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 200 && dist > 1) {
-                let force = (200 - dist) / 200;
-                this.vx += (dx / dist) * force * 0.15;
-                this.vy += (dy / dist) * force * 0.15;
-            }
-        }
     }
 
     draw(ctx, mouseX, mouseY) {
         let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const glowColor = isDark ? '27, 218, 122' : '0, 150, 0';
 
         let drawX = this.x;
         let drawY = this.y;
@@ -229,10 +220,36 @@ class Particle {
             drawY -= pOffsetY;
         }
 
-        ctx.fillStyle = isDark ? `rgba(27, 218, 122, ${0.28 + this.size*0.07})` : `rgba(0, 150, 0, ${0.28 + this.size*0.07})`;
-        ctx.beginPath();
-        ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        const baseAlpha = 0.28 + this.size * 0.07;
+
+        if (this.pulse > 0.05) {
+            // Scan pulse: node is "detected" - brighter, larger, with a soft glow
+            const litSize = this.size * (1 + this.pulse * 1.8);
+            const litAlpha = Math.min(1, baseAlpha + this.pulse * 0.7);
+            ctx.save();
+            ctx.shadowColor = `rgba(${glowColor}, ${this.pulse})`;
+            ctx.shadowBlur = 10 * this.pulse;
+            ctx.fillStyle = `rgba(${glowColor}, ${litAlpha})`;
+            ctx.beginPath();
+            ctx.arc(drawX, drawY, litSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        } else {
+            ctx.fillStyle = `rgba(${glowColor}, ${baseAlpha})`;
+            ctx.beginPath();
+            ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Brief scan-result tag on the node a ping originated from
+        if (this.tagUntil > performance.now()) {
+            const remaining = (this.tagUntil - performance.now()) / 700;
+            ctx.save();
+            ctx.font = '10px "Source Code Pro", monospace';
+            ctx.fillStyle = `rgba(${glowColor}, ${Math.max(0, remaining)})`;
+            ctx.fillText(this.tagText, drawX + 10, drawY - 10);
+            ctx.restore();
+        }
 
         return {x: drawX, y: drawY};
     }
@@ -248,6 +265,14 @@ class NetworkAnimation {
         this.mouse = { x: null, y: null };
         this.particleCount = window.innerWidth < 768 ? 60 : 130;
         this.time = 0;
+
+        // Scan propagation tuning: hovering near a node "pings" it, and the
+        // ping ripples outward across connected edges, fading with each hop.
+        this.HOVER_RADIUS = 55;
+        this.PING_COOLDOWN = 450;
+        this.PROPAGATION_FACTOR = 0.6;
+        this.PULSE_DECAY = 0.93;
+        this.lastPingTime = 0;
 
         this.init();
     }
@@ -311,63 +336,60 @@ class NetworkAnimation {
         this.canvas.height = this.canvas.parentElement.offsetHeight;
     }
 
+    /* ---- Scan Propagation: hovering near a node seeds a ping ---- */
+    triggerScan(positions) {
+        if (this.mouse.x === null || this.mouse.y === null) return;
+        if (window.scrollY > this.canvas.height) return;
+        if (performance.now() - this.lastPingTime < this.PING_COOLDOWN) return;
+
+        let nearestIndex = -1;
+        let nearestDist = this.HOVER_RADIUS;
+
+        positions.forEach((pos, i) => {
+            const dx = pos.x - this.mouse.x;
+            const dy = pos.y - this.mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < nearestDist) {
+                nearestDist = dist;
+                nearestIndex = i;
+            }
+        });
+
+        if (nearestIndex !== -1 && this.particles[nearestIndex].pulse < 0.3) {
+            const node = this.particles[nearestIndex];
+            node.pulse = 1;
+            node.tagText = '0x' + Math.floor(Math.random() * 0xffff).toString(16).toUpperCase().padStart(4, '0');
+            node.tagUntil = performance.now() + 700;
+            this.lastPingTime = performance.now();
+        }
+    }
+
     animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.time += 0.015;
 
+        // Decay every node's pulse before this frame's propagation
+        this.particles.forEach(p => {
+            p.pulse *= this.PULSE_DECAY;
+            if (p.pulse < 0.02) p.pulse = 0;
+        });
+
         let drawnPositions = [];
 
         this.particles.forEach(particle => {
-            particle.update(this.mouse.x, this.mouse.y);
+            particle.update();
             let pos = particle.draw(this.ctx, this.mouse.x, this.mouse.y);
             drawnPositions.push(pos);
         });
 
+        this.triggerScan(drawnPositions);
         this.connect(drawnPositions);
-    }
-
-    /* ---- Minimal Black Hole Renderer ---- */
-    drawBlackhole(cx, cy, isDark) {
-        const ctx = this.ctx;
-        const R = 6;
-        const pulse = Math.sin(this.time * 1.5) * 0.15 + 0.85; // subtle breathing
-
-        ctx.save();
-
-        // 1. Gravitational darkening -- radial void that eats light around it
-        let voidGrad = ctx.createRadialGradient(cx, cy, R * 0.3, cx, cy, R * 3.5);
-        voidGrad.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
-        voidGrad.addColorStop(0.4, 'rgba(0, 0, 0, 0.1)');
-        voidGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = voidGrad;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R * 3.5, 0, Math.PI * 2);
-        ctx.fill();
-
-        // 2. Event horizon -- pure black circle
-        ctx.fillStyle = '#000';
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.fill();
-
-        // 3. Photon ring -- single crisp ring, subtle glow
-        let glowColor = isDark ? `rgba(27, 218, 122, ${0.7 * pulse})` : `rgba(0, 200, 50, ${0.6 * pulse})`;
-        let glowColorShadow = isDark ? 'rgba(27, 218, 122, 1)' : 'rgba(0, 200, 50, 1)';
-
-        ctx.shadowColor = glowColorShadow;
-        ctx.shadowBlur = 8 * pulse;
-        ctx.strokeStyle = glowColor;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R + 2, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.shadowBlur = 0;
-        ctx.restore();
     }
 
     connect(positions) {
         let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const glowColor = isDark ? '27, 218, 122' : '0, 150, 0';
+        const snapshotPulses = this.particles.map(p => p.pulse);
 
         for (let a = 0; a < positions.length; a++) {
             for (let b = a + 1; b < positions.length; b++) {
@@ -376,22 +398,27 @@ class NetworkAnimation {
                 let distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < 120) {
-                    let opacityValue = 1 - (distance / 120);
+                    const edgeFalloff = 1 - (distance / 120);
+
+                    // Propagate the scan pulse outward across this edge
+                    if (snapshotPulses[a] > 0.05) {
+                        this.particles[b].pulse = Math.max(this.particles[b].pulse, snapshotPulses[a] * this.PROPAGATION_FACTOR * edgeFalloff);
+                    }
+                    if (snapshotPulses[b] > 0.05) {
+                        this.particles[a].pulse = Math.max(this.particles[a].pulse, snapshotPulses[b] * this.PROPAGATION_FACTOR * edgeFalloff);
+                    }
+
+                    const edgeBoost = Math.max(snapshotPulses[a], snapshotPulses[b]);
                     this.ctx.strokeStyle = isDark
-                        ? `rgba(27, 218, 122, ${opacityValue * 0.16})`
-                        : `rgba(0, 150, 0, ${opacityValue * 0.1})`;
-                    this.ctx.lineWidth = 1;
+                        ? `rgba(${glowColor}, ${edgeFalloff * 0.16 + edgeBoost * 0.5})`
+                        : `rgba(${glowColor}, ${edgeFalloff * 0.1 + edgeBoost * 0.4})`;
+                    this.ctx.lineWidth = 1 + edgeBoost * 1.2;
                     this.ctx.beginPath();
                     this.ctx.moveTo(positions[a].x, positions[a].y);
                     this.ctx.lineTo(positions[b].x, positions[b].y);
                     this.ctx.stroke();
                 }
             }
-        }
-
-        // Draw cursor black hole (no lines, just the void)
-        if (this.mouse.x !== null && this.mouse.y !== null && window.scrollY <= this.canvas.height) {
-            this.drawBlackhole(this.mouse.x, this.mouse.y, isDark);
         }
     }
 }
@@ -561,10 +588,60 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Initialize Navigation
     const mobileNav = new MobileNav();
 
+    // Terminal Window Tabs (ARIA tabs pattern: click + arrow-key navigation)
+    // Wired unconditionally so category switching works even if GSAP fails to load.
+    // Shared by every .terminal-window instance on the page (Skills, Certificates, ...).
+    const terminalWindows = Array.from(document.querySelectorAll('.terminal-window'));
+    const revealPanelLines = (panel) => {
+        const lines = panel.querySelectorAll('li');
+        if (typeof gsap !== 'undefined') {
+            gsap.fromTo(lines,
+                { x: -8, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.35, stagger: 0.05, ease: "power2.out" }
+            );
+        } else {
+            lines.forEach(line => { line.style.opacity = '1'; line.style.transform = 'none'; });
+        }
+    };
+
+    terminalWindows.forEach(terminalEl => {
+        const tabs = Array.from(terminalEl.querySelectorAll('.terminal-tab'));
+        const panels = Array.from(terminalEl.querySelectorAll('.terminal-panel'));
+
+        const activateTab = (tab) => {
+            tabs.forEach(t => {
+                const isActive = t === tab;
+                t.classList.toggle('active', isActive);
+                t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                t.tabIndex = isActive ? 0 : -1;
+            });
+            panels.forEach(panel => {
+                const isActive = panel.id === tab.getAttribute('data-target');
+                panel.classList.toggle('active', isActive);
+                panel.hidden = !isActive;
+                if (isActive) revealPanelLines(panel);
+            });
+        };
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => activateTab(tab));
+            tab.addEventListener('keydown', (e) => {
+                let newIndex = null;
+                if (e.key === 'ArrowRight') newIndex = (index + 1) % tabs.length;
+                if (e.key === 'ArrowLeft') newIndex = (index - 1 + tabs.length) % tabs.length;
+                if (newIndex !== null) {
+                    e.preventDefault();
+                    tabs[newIndex].focus();
+                    activateTab(tabs[newIndex]);
+                }
+            });
+        });
+    });
+
     // 3. Advanced GSAP Animations (Premium Effects)
     if (typeof gsap !== 'undefined') {
         // A. General fade-in for standard elements
-        const animateElements = gsap.utils.toArray('.timeline-item, .pok-card');
+        const animateElements = gsap.utils.toArray('.timeline-item');
         animateElements.forEach((el) => {
             gsap.fromTo(el, 
                 { y: 50, opacity: 0 },
@@ -651,25 +728,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // E. Skills Micro-Staggering
-        const skillCategories = document.querySelectorAll('.skill-category');
-        skillCategories.forEach(category => {
-            const items = category.querySelectorAll('li');
-            gsap.fromTo(category,
+        // E. Terminal Window Entrance (Skills, Certificates, ...)
+        terminalWindows.forEach(terminalEl => {
+            gsap.fromTo(terminalEl,
                 { y: 30, opacity: 0 },
                 {
-                    y: 0, opacity: 1, duration: 0.6, ease: "power2.out",
-                    scrollTrigger: { trigger: category, start: "top 85%" }
+                    y: 0, opacity: 1, duration: 0.7, ease: "power2.out",
+                    scrollTrigger: { trigger: terminalEl, start: "top 85%" }
                 }
             );
-            if(items.length > 0) {
-                gsap.fromTo(items,
-                    { x: -10, opacity: 0 },
-                    {
-                        x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out",
-                        scrollTrigger: { trigger: category, start: "top 85%" }
-                    }
-                );
+
+            // Reveal the initially active panel's lines on scroll into view
+            const initialPanel = terminalEl.querySelector('.terminal-panel.active');
+            if (initialPanel) {
+                ScrollTrigger.create({
+                    trigger: terminalEl,
+                    start: "top 85%",
+                    once: true,
+                    onEnter: () => revealPanelLines(initialPanel)
+                });
             }
         });
 

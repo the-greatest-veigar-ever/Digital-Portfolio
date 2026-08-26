@@ -156,25 +156,47 @@
     <section id="proof-of-knowledge" class="proof-of-knowledge">
         <div class="container">
             <h2 class="section-title">Certificates</h2>
-            <div class="pok-grid">
-                <div class="pok-card">
-                    <div class="pok-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="pok-content">
-                        <h3>ISC2 Systems Security Certified Practitioner</h3>
-                        <p class="pok-subtitle">ISC2 SSCP</p>
-                        <p class="pok-date"><i class="far fa-calendar-alt"></i> Date: 4th Apr 2026</p>
-                        <a href="https://drive.google.com/file/d/1hbL229sTzkrU-RBPxmjZDqLRrKSquIr2/view?usp=sharing"
-                            target="_blank" class="pok-url">View Credential <i class="fas fa-external-link-alt"></i></a>
+            <div class="terminal-window">
+                <div class="terminal-titlebar">
+                    <div class="terminal-dots">
+                        <span></span><span></span><span></span>
                     </div>
+                    <span class="terminal-path">quan@security:~</span>
                 </div>
-                <div class="pok-card">
-                    <div class="pok-icon"><i class="fas fa-shield-virus"></i></div>
-                    <div class="pok-content">
-                        <h3>ISC2 Certified in Cybersecurity</h3>
-                        <p class="pok-subtitle">ISC2 CC</p>
-                        <p class="pok-date"><i class="far fa-calendar-alt"></i> Date: 17th Jun 2025</p>
-                        <a href="https://drive.google.com/file/d/1blT-b8I6MQIpM4RoC39ZV7mYL-l90Swu/view?usp=sharing"
-                            target="_blank" class="pok-url">View Credential <i class="fas fa-external-link-alt"></i></a>
+
+                <div class="terminal-body">
+                    <div class="terminal-line terminal-prompt">
+                        <span class="prompt-symbol">$</span> ls ~/certificates/
+                    </div>
+
+                    <div class="terminal-tabs" role="tablist" aria-label="Certificates">
+                        <button class="terminal-tab active" role="tab" aria-selected="true" aria-controls="cert-panel-sscp" id="cert-tab-sscp" data-target="cert-panel-sscp">
+                            <i class="fas fa-shield-alt"></i> <span class="tab-label">ISC2-SSCP.cert</span>
+                        </button>
+                        <button class="terminal-tab" role="tab" aria-selected="false" aria-controls="cert-panel-cc" id="cert-tab-cc" data-target="cert-panel-cc" tabindex="-1">
+                            <i class="fas fa-shield-virus"></i> <span class="tab-label">ISC2-CC.cert</span>
+                        </button>
+                    </div>
+
+                    <div class="terminal-panels">
+                        <div class="terminal-panel active" role="tabpanel" id="cert-panel-sscp" aria-labelledby="cert-tab-sscp">
+                            <div class="terminal-line"><span class="prompt-symbol">$</span> cat ISC2-SSCP.cert</div>
+                            <ul class="cert-fields">
+                                <li><span class="field-key">name</span><span class="field-value">ISC2 Systems Security Certified Practitioner</span></li>
+                                <li><span class="field-key">credential</span><span class="field-value">ISC2 SSCP</span></li>
+                                <li><span class="field-key">issued</span><span class="field-value">4th Apr 2026</span></li>
+                                <li><span class="field-key">verify</span><span class="field-value"><a href="https://drive.google.com/file/d/1hbL229sTzkrU-RBPxmjZDqLRrKSquIr2/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">view credential <i class="fas fa-external-link-alt"></i></a></span></li>
+                            </ul>
+                        </div>
+                        <div class="terminal-panel" role="tabpanel" id="cert-panel-cc" aria-labelledby="cert-tab-cc" hidden>
+                            <div class="terminal-line"><span class="prompt-symbol">$</span> cat ISC2-CC.cert</div>
+                            <ul class="cert-fields">
+                                <li><span class="field-key">name</span><span class="field-value">ISC2 Certified in Cybersecurity</span></li>
+                                <li><span class="field-key">credential</span><span class="field-value">ISC2 CC</span></li>
+                                <li><span class="field-key">issued</span><span class="field-value">17th Jun 2025</span></li>
+                                <li><span class="field-key">verify</span><span class="field-value"><a href="https://drive.google.com/file/d/1blT-b8I6MQIpM4RoC39ZV7mYL-l90Swu/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">view credential <i class="fas fa-external-link-alt"></i></a></span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -559,32 +581,70 @@
     <section id="skills" class="skills">
         <div class="container">
             <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-shield-alt"></i> Security Frameworks & Governance</h3>
-                    <ul>
-                        <li>ISO 27001, NIST CSF, NIST RMF</li>
-                        <li>PCI-DSS, APRA CPS 230/234</li>
-                        <li>STRIDE</li>
-                    </ul>
+            <div class="terminal-window">
+                <div class="terminal-titlebar">
+                    <div class="terminal-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="terminal-path">quan@security:~</span>
                 </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-network-wired"></i> Security Domains</h3>
-                    <ul>
-                        <li>Enterprise Security Architecture</li>
-                        <li>Application Security</li>
-                        <li>Shift-Left CI/CD Pipelines</li>
-                        <li>IAM, Multi-Cloud Security</li>
-                        <li>Security SDLC, OWASP</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-robot"></i> AI Security</h3>
-                    <ul>
-                        <li>Applied ML for Security (SageMaker, Bedrock)</li>
-                        <li>Security Automation (Python, PowerShell)</li>
-                        <li>Data Analytics (SQL, Neo4J)</li>
-                    </ul>
+
+                <div class="terminal-body">
+                    <div class="terminal-line terminal-prompt">
+                        <span class="prompt-symbol">$</span> ls ~/skills/
+                    </div>
+
+                    <div class="terminal-tabs" role="tablist" aria-label="Skill categories">
+                        <button class="terminal-tab active" role="tab" aria-selected="true" aria-controls="panel-frameworks" id="tab-frameworks" data-target="panel-frameworks">
+                            <i class="fas fa-shield-alt"></i> <span class="tab-label">security-frameworks/</span>
+                        </button>
+                        <button class="terminal-tab" role="tab" aria-selected="false" aria-controls="panel-domains" id="tab-domains" data-target="panel-domains" tabindex="-1">
+                            <i class="fas fa-network-wired"></i> <span class="tab-label">security-domains/</span>
+                        </button>
+                        <button class="terminal-tab" role="tab" aria-selected="false" aria-controls="panel-ai" id="tab-ai" data-target="panel-ai" tabindex="-1">
+                            <i class="fas fa-robot"></i> <span class="tab-label">ai-security/</span>
+                        </button>
+                    </div>
+
+                    <div class="terminal-panels">
+                        <div class="terminal-panel active" role="tabpanel" id="panel-frameworks" aria-labelledby="tab-frameworks">
+                            <div class="terminal-line"><span class="prompt-symbol">$</span> cat security-frameworks/*</div>
+                            <ul class="skills-tree">
+                                <li><span class="tree-branch">├──</span> ISO 27001</li>
+                                <li><span class="tree-branch">├──</span> NIST CSF</li>
+                                <li><span class="tree-branch">├──</span> NIST RMF</li>
+                                <li><span class="tree-branch">├──</span> PCI-DSS</li>
+                                <li><span class="tree-branch">├──</span> APRA CPS 230/234</li>
+                                <li><span class="tree-branch">└──</span> STRIDE</li>
+                            </ul>
+                        </div>
+                        <div class="terminal-panel" role="tabpanel" id="panel-domains" aria-labelledby="tab-domains" hidden>
+                            <div class="terminal-line"><span class="prompt-symbol">$</span> cat security-domains/*</div>
+                            <ul class="skills-tree">
+                                <li><span class="tree-branch">├──</span> Enterprise Security Architecture</li>
+                                <li><span class="tree-branch">├──</span> Application Security</li>
+                                <li><span class="tree-branch">├──</span> Shift-Left CI/CD Pipelines</li>
+                                <li><span class="tree-branch">├──</span> IAM</li>
+                                <li><span class="tree-branch">├──</span> Multi-Cloud Security</li>
+                                <li><span class="tree-branch">├──</span> Security SDLC</li>
+                                <li><span class="tree-branch">└──</span> OWASP</li>
+                            </ul>
+                        </div>
+                        <div class="terminal-panel" role="tabpanel" id="panel-ai" aria-labelledby="tab-ai" hidden>
+                            <div class="terminal-line"><span class="prompt-symbol">$</span> cat ai-security/*</div>
+                            <ul class="skills-tree">
+                                <li><span class="tree-branch">├──</span> Applied ML for Security</li>
+                                <li><span class="tree-branch">├──</span> SageMaker</li>
+                                <li><span class="tree-branch">├──</span> Bedrock</li>
+                                <li><span class="tree-branch">├──</span> Security Automation</li>
+                                <li><span class="tree-branch">├──</span> Python</li>
+                                <li><span class="tree-branch">├──</span> PowerShell</li>
+                                <li><span class="tree-branch">├──</span> Data Analytics</li>
+                                <li><span class="tree-branch">├──</span> SQL</li>
+                                <li><span class="tree-branch">└──</span> Neo4J</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
