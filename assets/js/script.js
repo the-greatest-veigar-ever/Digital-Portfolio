@@ -641,13 +641,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Advanced GSAP Animations (Premium Effects)
     if (typeof gsap !== 'undefined') {
         // A. General fade-in for standard elements
-        const animateElements = gsap.utils.toArray('.timeline-item');
+        const animateElements = gsap.utils.toArray('.accordion-item');
         animateElements.forEach((el) => {
-            gsap.fromTo(el, 
-                { y: 50, opacity: 0 },
+            gsap.fromTo(el,
+                { y: 30, opacity: 0 },
                 {
                     scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
-                    y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.2)"
+                    y: 0, opacity: 1, duration: 0.6, ease: "power2.out"
                 }
             );
         });
@@ -868,18 +868,18 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.fromTo(contactItems,
                 { x: -30, opacity: 0 },
                 {
-                    x: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "elastic.out(1, 0.7)",
+                    x: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power2.out",
                     scrollTrigger: { trigger: ".contact-info", start: "top 85%" }
                 }
             );
         }
-        
+
         const socialLinks = document.querySelectorAll('.social-links .social-link');
         if (socialLinks.length > 0) {
             gsap.fromTo(socialLinks,
-                { y: 30, opacity: 0, scale: 0.5 },
+                { y: 30, opacity: 0 },
                 {
-                    y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.5)",
+                    y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out",
                     scrollTrigger: { trigger: ".social-links", start: "top 90%" }
                 }
             );
