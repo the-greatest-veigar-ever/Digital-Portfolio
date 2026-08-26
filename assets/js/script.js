@@ -6,6 +6,37 @@
  */
 
 /* =========================================
+   0. Preloader
+   ========================================= */
+(function initPreloader() {
+    const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const MIN_DISPLAY_MS = prefersReducedMotion ? 0 : 500;
+    const MAX_WAIT_MS = 3000;
+    const start = Date.now();
+    let hidden = false;
+
+    document.body.style.overflow = 'hidden';
+
+    function hidePreloader() {
+        if (hidden) return;
+        hidden = true;
+        const elapsed = Date.now() - start;
+        const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+        setTimeout(() => {
+            preloader.classList.add('preloader-hidden');
+            document.body.style.overflow = '';
+            setTimeout(() => preloader.remove(), 600);
+        }, wait);
+    }
+
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, MAX_WAIT_MS);
+})();
+
+/* =========================================
    1. Theme Manager
    ========================================= */
 class ThemeManager {
@@ -198,7 +229,7 @@ class Particle {
             drawY -= pOffsetY;
         }
 
-        ctx.fillStyle = isDark ? `rgba(0, 255, 65, ${0.4 + this.size*0.1})` : `rgba(0, 150, 0, ${0.4 + this.size*0.1})`;
+        ctx.fillStyle = isDark ? `rgba(27, 218, 122, ${0.28 + this.size*0.07})` : `rgba(0, 150, 0, ${0.28 + this.size*0.07})`;
         ctx.beginPath();
         ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -215,7 +246,7 @@ class NetworkAnimation {
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.mouse = { x: null, y: null };
-        this.particleCount = window.innerWidth < 768 ? 100 : 200;
+        this.particleCount = window.innerWidth < 768 ? 60 : 130;
         this.time = 0;
 
         this.init();
@@ -319,24 +350,16 @@ class NetworkAnimation {
         ctx.arc(cx, cy, R, 0, Math.PI * 2);
         ctx.fill();
 
-        // 3. Photon ring -- single crisp ring with glow
-        let glowColor = isDark ? `rgba(0, 255, 65, ${0.9 * pulse})` : `rgba(0, 200, 50, ${0.8 * pulse})`;
-        let glowColorShadow = isDark ? 'rgba(0, 255, 65, 1)' : 'rgba(0, 200, 50, 1)';
+        // 3. Photon ring -- single crisp ring, subtle glow
+        let glowColor = isDark ? `rgba(27, 218, 122, ${0.7 * pulse})` : `rgba(0, 200, 50, ${0.6 * pulse})`;
+        let glowColorShadow = isDark ? 'rgba(27, 218, 122, 1)' : 'rgba(0, 200, 50, 1)';
 
         ctx.shadowColor = glowColorShadow;
-        ctx.shadowBlur = 15 * pulse;
+        ctx.shadowBlur = 8 * pulse;
         ctx.strokeStyle = glowColor;
-        ctx.lineWidth = 1.8;
+        ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(cx, cy, R + 2, 0, Math.PI * 2);
-        ctx.stroke();
-
-        // Second pass for sharper glow bloom
-        ctx.shadowBlur = 8;
-        ctx.strokeStyle = isDark ? `rgba(120, 255, 160, ${0.5 * pulse})` : `rgba(80, 220, 100, ${0.4 * pulse})`;
-        ctx.lineWidth = 0.8;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R + 4, 0, Math.PI * 2);
         ctx.stroke();
 
         ctx.shadowBlur = 0;
@@ -355,8 +378,8 @@ class NetworkAnimation {
                 if (distance < 120) {
                     let opacityValue = 1 - (distance / 120);
                     this.ctx.strokeStyle = isDark
-                        ? `rgba(0, 255, 65, ${opacityValue * 0.25})`
-                        : `rgba(0, 150, 0, ${opacityValue * 0.15})`;
+                        ? `rgba(27, 218, 122, ${opacityValue * 0.16})`
+                        : `rgba(0, 150, 0, ${opacityValue * 0.1})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.beginPath();
                     this.ctx.moveTo(positions[a].x, positions[a].y);
@@ -571,28 +594,12 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // B. 3D Tilt Hover Effect for Premium Cards
-        const tiltElements = document.querySelectorAll('.stat, .pok-card');
-        tiltElements.forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -10;
-                const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
-                gsap.to(el, { rotateX: rotateX, rotateY: rotateY, duration: 0.4, ease: "power2.out", transformPerspective: 1000 });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-
-        // C. Staggered 3D Flip Entrance for Certificates
-        gsap.fromTo('.cert-card', 
-            { y: 80, opacity: 0, rotationX: -20 },
-            { 
-                scrollTrigger: { trigger: '.cert-grid', start: "top 85%" }, 
-                y: 0, opacity: 1, rotationX: 0, stagger: 0.15, duration: 1, ease: "power3.out", transformPerspective: 1000 
+        // B. Staggered Entrance for Certificates
+        gsap.fromTo('.cert-card',
+            { y: 40, opacity: 0 },
+            {
+                scrollTrigger: { trigger: '.cert-grid', start: "top 85%" },
+                y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power2.out"
             }
         );
 
@@ -614,11 +621,11 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // D. Number Counter & Dynamic Entrance for About Stats
+        // C. Number Counter & Dynamic Entrance for About Stats
         const statsContainers = document.querySelectorAll('.stat');
-        gsap.fromTo(statsContainers, 
-            { y: 40, opacity: 0, scale: 0.9 },
-            { scrollTrigger: { trigger: '.about-stats', start: "top 90%" }, y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.8, ease: "back.out(1.5)" }
+        gsap.fromTo(statsContainers,
+            { y: 30, opacity: 0 },
+            { scrollTrigger: { trigger: '.about-stats', start: "top 90%" }, y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power2.out" }
         );
 
         const numbers = document.querySelectorAll('.stat h3');
@@ -1057,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝
 ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝
 
-🔐 Security Associate Portfolio
+🔐 Security Architect, Associate Portfolio
 💻 Built with passion for cybersecurity
 🎯 Keyboard shortcuts: Ctrl/Cmd + D (toggle theme)
 🕹️ Try typing "hack" ...

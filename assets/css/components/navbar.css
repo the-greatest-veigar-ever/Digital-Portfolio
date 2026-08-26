@@ -98,7 +98,6 @@
     border-radius: 0 3px 3px 0;
     transform: scaleY(0);
     transition: transform 0.3s ease;
-    box-shadow: 0 0 8px var(--glow-color);
 }
 
 .nav-link.active::after {

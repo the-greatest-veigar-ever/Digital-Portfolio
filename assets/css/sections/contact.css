@@ -31,7 +31,6 @@
     font-size: 1.5rem;
     color: var(--accent-color);
     width: 30px;
-    text-shadow: 0 0 10px var(--text-glow);
 }
 
 .contact-item h3 {
@@ -84,7 +83,6 @@
 .social-link:hover {
     background: var(--accent-hover);
     transform: scale(1.1);
-    box-shadow: 0 5px 15px var(--glow-color);
 }
 
 @media (max-width: 768px) {

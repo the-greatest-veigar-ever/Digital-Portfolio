@@ -35,8 +35,8 @@ html.js-enabled .hero-buttons .btn {
         repeating-linear-gradient(0deg,
             transparent,
             transparent 2px,
-            rgba(0, 255, 65, 0.03) 2px,
-            rgba(0, 255, 65, 0.03) 4px);
+            rgba(var(--accent-rgb), 0.03) 2px,
+            rgba(var(--accent-rgb), 0.03) 4px);
     pointer-events: none;
     z-index: 1;
 }

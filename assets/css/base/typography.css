@@ -28,7 +28,6 @@ section {
     height: 3px;
     background: var(--accent-color);
     margin: var(--spacing-md) auto;
-    box-shadow: 0 0 10px var(--glow-color);
 }
 
 @media (max-width: 768px) {

@@ -1,5 +1,5 @@
 # Nguyen Minh Quan (Garold Nguyễn)
-### Security Architect [Junior Lv.] @ NAB Innovation Centre Vietnam
+### Security Architect, Associate @ NAB Innovation Centre Vietnam
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/quanng47/)
 [![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=flat-square&logo=gmail)](mailto:garoldnguyen@gmail.com)
@@ -64,7 +64,7 @@ A collection of personal projects focusing on utility, productivity, and enterta
 ## Work Experience
 
 #### **NAB Innovation Centre Vietnam** (2024 - Present)
-**Security Architect (Junior Level)**
+**Security Architect, Associate**
 *   Conducted security risk assessments for Enterprise Security Gateway migration.
 *   Managed executive-approved risk deferrals, ensuring 100% compliance for customer-exposed assets.
 *   Performed Cloud Service (SaaS) risk assessments and due diligence using STRIDE.

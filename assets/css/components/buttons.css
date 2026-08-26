@@ -42,7 +42,6 @@
     color: var(--accent-color);
     border-color: var(--accent-color);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px var(--glow-color);
 }
 
 .btn.secondary {
@@ -55,7 +54,6 @@
     background: var(--accent-color);
     color: var(--nav-bg);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px var(--glow-color);
 }
 
 @media (max-width: 768px) {
@@ -107,7 +105,6 @@
 .back-to-top:hover {
     background: var(--accent-hover);
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--glow-color);
 }
 
 .back-to-top:active {
